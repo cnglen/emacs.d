@@ -14,10 +14,10 @@
 ;; (add-to-list 'package-archives
 ;;              '("popkit" . "http://elpa.popkit.org/packages/"))
 ;;; or
-(setq package-archives
-      '(("gnu-cn" . "http://elpa.codefalling.com/gnu/")
-        ("org-cn" . "http://elpa.codefalling.com/org/")
-        ("melpa-cn" . "http://elpa.codefalling.com/melpa/")))
+;; (setq package-archives
+;;       '(("gnu-cn" . "http://elpa.codefalling.com/gnu/")
+;;         ("org-cn" . "http://elpa.codefalling.com/org/")
+;;         ("melpa-cn" . "http://elpa.codefalling.com/melpa/")))
 
 ;;; install packages
 (require-package 'ob-ipython)
@@ -26,6 +26,9 @@
 (require-package 'anaconda-mode)
 (require-package 'org)
 (require-package 'ox-reveal)
+(require-package 'origami)
+(require-package 'sqlup-mode)
+(require-package 'ggtags)
 ;; (require-package 'hive)
 
 
@@ -134,7 +137,7 @@ unwanted space when exporting org-mode to html."
 ;;; Hive
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(require-package 'sqlup-mode)
+
 (require 'sql)
 (require 'sql-indent)
 (require 'sqlup-mode)
@@ -548,13 +551,9 @@ Return a list containing the level change and the previous indentation."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Ctrip
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun connect-remote ()
-  (interactive)
-  (dired "/hotelbi@10.8.84.13#1022:/home/hotelbi/wanggang/"))
-
-(defun connect-remote-76 ()
-  (interactive)
-  (dired "/wanggang@10.8.118.76#22:/home/wanggang/workspace"))
+;; (defun connect-remote ()
+;;   (interactive)
+;;   (dired "/user@ip_or_server#port:/home/username"))
 
 ;;; TBD
 ;; (setq cscope-do-not-update-database t)
@@ -590,7 +589,6 @@ Return a list containing the level change and the previous indentation."
 ;; (cscope-setup)
 
 ;;; global
-(require-package 'ggtags)
 (require 'ggtags)
 (add-hook 'c-mode-common-hook
           (lambda ()

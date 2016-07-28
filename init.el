@@ -2,6 +2,13 @@
 ;;; This file bootstraps the configuration, which is divided into
 ;;; a number of other files.
 
+;;----------------------------------------------------------------------------
+;; Open Debug Mode
+;;----------------------------------------------------------------------------
+(setq debug-on-error t)
+(message ">> init.el start ...")
+
+
 (let ((minver "23.3"))
   (when (version<= emacs-version "23.1")
     (error "Your Emacs is too old -- this config requires v%s or higher" minver)))
@@ -13,7 +20,7 @@
 
 (defconst *spell-check-support-enabled* nil) ;; Enable with t if you prefer
 (defconst *is-a-mac* (eq system-type 'darwin))
-
+(message ">> init.el done")
 ;;----------------------------------------------------------------------------
 ;; Temporarily reduce garbage collection during startup
 ;;----------------------------------------------------------------------------
@@ -35,6 +42,7 @@
       '(("gnu-cn" . "http://elpa.codefalling.com/gnu/")
         ("org-cn" . "http://elpa.codefalling.com/org/")
         ("melpa-cn" . "http://elpa.codefalling.com/melpa/")))
+(package-initialize)
 (require 'init-elpa)      ;; Machinery for installing required packages
 (require 'init-exec-path) ;; Set up $PATH
 
@@ -163,7 +171,7 @@
           (lambda ()
             (message "init completed in %.2fms"
                      (sanityinc/time-subtract-millis after-init-time before-init-time))))
-
+(message ">> init.el done")
 
 (provide 'init)
 
