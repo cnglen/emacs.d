@@ -31,6 +31,10 @@
 (require 'init-utils)
 (require 'init-site-lisp) ;; Must come before elpa, as it may provide package.el
 ;; Calls (package-initialize)
+(setq package-archives
+      '(("gnu-cn" . "http://elpa.codefalling.com/gnu/")
+        ("org-cn" . "http://elpa.codefalling.com/org/")
+        ("melpa-cn" . "http://elpa.codefalling.com/melpa/")))
 (require 'init-elpa)      ;; Machinery for installing required packages
 (require 'init-exec-path) ;; Set up $PATH
 
