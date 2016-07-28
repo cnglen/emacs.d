@@ -1,0 +1,81 @@
+;;; hive mode by cnglen
+(require 'sql)
+
+;; 1) Add the product to the list of known products.
+(sql-add-product 'hive "Hive"
+                 '(:free-software t))
+
+;; 2) Define font lock settings.  All ANSI keywords will be
+;;    highlighted automatically, so only product specific keywords
+;;    need to be defined here.
+
+
+(defvar sql-mode-hive-font-lock-keywords
+  (list
+   ;; Hive Functions
+   (sql-font-lock-keywords-builder 'font-lock-builtin-face nil
+                                   "avg" ; to update
+                                   )
+   ;; Hive Keywords
+   (sql-font-lock-keywords-builder 'font-lock-keyword-face nil
+                                   "add"  "admin" "after" "all" "alter" "analyze" "and" "archive"  "as" "asc" "authorization"
+                                   "before" "between"  "both" "bucket" "buckets" "by"
+                                   "cascade" "case" "cast" "change"  "cluster" "clustered" "clusterstatus"
+                                   "collection" "column" "columns" "comment" "compact" "compactions"
+                                   "compute" "concatenate" "conf" "continue" "create" "cross"
+                                   "cube" "current" "current_date" "current_timestamp" "cursor" "data"
+                                   "database" "databases" "datetime" "day" "dbproperties"  "deferred"
+                                   "defined" "delete" "delimited" "dependency" "desc" "describe"
+                                   "directories" "directory" "disable" "distinct" "distribute"  "drop"
+                                   "elem_type" "else" "enable" "end" "escaped" "exchange" "exclusive"
+                                   "exists" "explain" "export" "extended" "external"
+                                   "false" "fetch" "fields" "file" "fileformat" "first"  "following"
+                                   "for" "format" "formatted" "from" "full" "function" "functions" "grant" "group" "grouping"
+                                   "having" "hold_ddltime" "hour"
+                                   "idxproperties" "if" "ignore" "import" "in" "index" "indexes"
+                                   "inner" "inpath" "inputdriver" "inputformat" "insert" "intersect" "interval" "into" "is" "items"
+                                   "jar" "join" "keys" "key_type"
+                                   "lateral" "left" "less" "like" "limit" "lines" "load" "local" "location" "lock" "locks" "logical" "long"
+                                   "macro" "mapjoin" "materialized" "minus" "minute" "month" "more" "msck"
+                                   "none" "noscan" "not" "no_drop" "null"
+                                   "of" "offline" "on" "option" "or" "order" "out" "outer" "outputdriver" "outputformat" "over" "overwrite" "owner"
+                                   "partialscan" "partition" "partitioned" "partitions"
+                                   "percent" "plus" "preceding" "preserve" "pretty" "principals" "procedure" "protection" "purge"
+                                   "range" "read" "readonly" "reads" "rebuild" "recordreader"
+                                   "recordwriter" "reduce" "regexp" "reload" "rename" "repair"
+                                   "replace" "restrict" "revoke" "rewrite" "right" "rlike" "role" "roles" "rollup" "row" "rows"
+                                   "schema" "schemas" "second" "select" "semi" "serde"
+                                   "serdeproperties" "server" "set" "sets" "shared" "show" "show_database"
+                                   "skewed"  "sort" "sorted" "ssl" "statistics" "stored" "streamtable"
+                                   "table" "tables" "tablesample" "tblproperties" "temporary" "terminated"
+                                   "then" "to" "touch" "transactions" "transform" "trigger" "true" "truncate"
+                                   "unarchive" "unbounded" "undo" "union"  "uniquejoin" "unlock"
+                                   "unset" "unsigned" "update" "uri" "use" "user" "using" "utc" "utctimestamp"
+                                   "values" "value_type" "view"
+                                   "when" "where" "while" "window" "with"
+                                   "year"
+                                   )
+   ;; Hive Data Types
+   (sql-font-lock-keywords-builder 'font-lock-type-face nil
+                                   "tinyint" "smallint" "int" "bigint"
+                                   "float" "double" "decimal"
+                                   "string" "varchar" "char"
+                                   "boolean"
+                                   "binary"
+                                   "timestamp" "date"
+                                   "array" "struct" "map"
+                                   "uniontype" "textfile" "sequencefile" "rcfile" "inputformat" ;; to update
+                                   )
+   )
+  "Hive SQL keywords used by font-lock.
+
+   This variable is used by `sql-mode' and `sql-interactive-mode'.  The
+   regular expressions are created during compilation by calling the
+   function `regexp-opt'.  Therefore, take a look at the source before
+   you define your own `sql-mode-hive-font-lock-keywords'.")
+
+(sql-set-product-feature 'hive
+                         :font-lock
+                         'sql-mode-hive-font-lock-keywords)
+(setq font-lock-defaults '( sql-mode-hive-font-lock-keywords
+                            ))
