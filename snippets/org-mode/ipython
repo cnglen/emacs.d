@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: ipython
+# key: _ipy
+# --
+#+BEGIN_SRC ipython :session :exports both
+$0
+#+END_SRC
