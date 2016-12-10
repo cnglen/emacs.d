@@ -10,6 +10,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; ELPA
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(message ">>   ELPA started ...")
 ;;; Packages repository In CHINA
 ;; (add-to-list 'package-archives
 ;;              '("popkit" . "http://elpa.popkit.org/packages/"))
@@ -29,31 +30,54 @@
 (require-package 'origami)
 (require-package 'sqlup-mode)
 (require-package 'ggtags)
+(require-package 'org-plus-contrib)
 ;; (require-package 'hive)
 
+
+
+(message ">>   ELPA done ...")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Python
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(elpy-enable)
-;; (setq python-shell-interpreter "ipython"
-;;       python-shell-interpreter-args "--simple-prompt -i")
-(setq python-shell-interpreter "python") ; to use ob-ipython
+(message ">>   python started ...")
+;;; todo
+;;; sphinx-doc
+;;; sphinx-mode
+;;;
+(require-package 'sphinx-doc)
+(require-package 'py-autopep8)
+(require 'py-autopep8)
+(setq py-autopep8-options '("--max-line-length=120"))
+(add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
+
+(add-hook 'python-mode-hook (lambda ()
+                              (require 'sphinx-doc)
+                              (sphinx-doc-mode t)))
+;; (elpy-enable)
+;; ;; (setq python-shell-interpreter "ipython"
+;; ;;       python-shell-interpreter-args "--simple-prompt -i")
+;; (setq python-shell-interpreter "python") ; to use ob-ipython
 ;; ;; (elpy-use-ipython)                        ; disabled to use ob-ipython
 ;; ;; (setq python-shell-interpreter "ipython") ; disabled to use ob-ipython
 ;; (setq python-shell-interpreter "ipython3") ; alternative
 ;; (setq python-shell-interpreter-args "--pylab --nosep --pprint") ; alternative
-(add-hook 'python-mode-hook 'hs-minor-mode)
+;; (add-hook 'python-mode-hook 'hs-minor-mode)
 (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
+(setq python-shell-interpreter "ipython")
+(setq python-shell-interpreter-args "-i --pylab --nosep --pprint") ; alternative
+(setq python-shell-interpreter-args "-i --pprint") ; alternative
+(setq python-shell-virtualenv-root "/opt/anaconda3/")
+(message ">>   python done ...")
 
 
 
 
-
-
-;; ORG-MODE
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; ORG-MODE
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(message ">>   org started ...")
 ;; org export to pdf
 (when (require 'ox-latex nil 'noerror)
   ;; You need to install pygments to use minted
@@ -136,6 +160,84 @@ unwanted space when exporting org-mode to html."
 (yas-reload-all)
 (add-hook 'org-mode-hook 'yas-minor-mode)
 
+
+;;; clean tmp file when generating pdf
+(setq org-latex-logfiles-extensions (quote ("lof" "lot" "tex" "tex~" "aux" "idx" "log" "out" "toc" "nav" "snm" "vrb" "dvi" "fdb_latexmk" "blg" "brf" "fls" "entoc" "ps" "spl" "bbl" "_minted")))
+
+;;; org export to md
+(require 'ox-md)
+
+;;; Planuml
+(setq plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
+(setq org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(;; other Babel languages
+   (plantuml . t)))
+
+;;; taskjuggler
+(require 'ox-taskjuggler)
+(setq org-taskjuggler-default-reports '("include \"reports.tji\""))
+(setq org-taskjuggler-default-reports '("
+textreport report \"Plan\" {
+  formats html
+  header '== %title =='
+
+  center -8<-
+    [#Plan 甘特图] | [#Resource_Allocation 资源分配] | [#Contact_List 资源列表]
+    ----
+    === Plan ===
+    <[report id=\"gantt\"]>
+    ----
+    === Resource Allocation ===
+    <[report id=\"resource_graph\"]>
+    ----
+    === Contact List ===
+    <[report id=\"contact_list\"]>
+  ->8-
+}
+
+# A traditional Gantt chart with a project overview
+taskreport gantt \"\" {
+  headline \"甘特图\"
+  columns name{title '名称'},
+    start{title '开始日期'},
+    end{title '结束日期'},
+    effort{title \"工作量\"},
+    resources{title '资源'
+              listtype comma
+              listitem \"<-query attribute='name'->\"
+              },
+    chart { scale day
+           width 1000
+          },
+    duration{title \"持续时长\"
+  }
+  loadunit shortauto
+  hideresource 1
+}
+
+# A graph showing resource allocation. It identifies whether each resource is under- or over-allocated for.
+resourcereport resource_graph \"\" {
+  headline \"资源分配图\"
+  columns no, name{title '名称'}, effort{title '工作量'}, weekly
+  loadunit shortauto
+  hidetask ~(isleaf() & isleaf_())
+  sorttasks plan.start.up
+}
+resourcereport contact_list \"\" {
+  headline \"资源列表\"
+  columns name{title '名称'},
+  email{title '电子邮件'},
+  chart{scale day width 800}
+  hideresource ~isleaf()
+  sortresources name.up
+  hidetask @all
+}
+
+"))
+
+(message ">>   org started done")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Hive
@@ -564,24 +666,78 @@ Return a list containing the level change and the previous indentation."
 ;;; pandoc-mode
 
 
-;;; Maven/Java/Scala
-;;; old using hide show, using origami
-;; (require 'hideshow)
-;; (require 'sgml-mode)
-;; (require 'nxml-mode)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Java
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Usage
+;;;
+;;; 1) M-x start-eclimd or /opt/eclipse/jee-neon/eclipse/eclimd
+;;; 2) M-x eclim-project- create or /opt/eclipse/jee-neon/eclipse/eclim -command project_create -f ~/workspace/thinking-in-java -n java -p eclim_project
+;;;
+;; (define-key eclim-mode-map (kbd "C-c C-e s")   'eclim-java-method-signature-at-point)
+;; (define-key eclim-mode-map (kbd "C-c C-e f d") 'eclim-java-find-declaration)
+;; (define-key eclim-mode-map (kbd "C-c C-e f r") 'eclim-java-find-references)
+;; (define-key eclim-mode-map (kbd "C-c C-e f t") 'eclim-java-find-type)
+;; (define-key eclim-mode-map (kbd "C-c C-e f f") 'eclim-java-find-generic)
+;; (define-key eclim-mode-map (kbd "C-c C-e r")   'eclim-java-refactor-rename-symbol-at-point)
+;; (define-key eclim-mode-map (kbd "C-c C-e i")   'eclim-java-import-organize)
+;; (define-key eclim-mode-map (kbd "C-c C-e h")   'eclim-java-hierarchy)
+;; (define-key eclim-mode-map (kbd "C-c C-e z")   'eclim-java-implement)
+;; (define-key eclim-mode-map (kbd "C-c C-e d")   'eclim-java-doc-comment)
+;; (define-key eclim-mode-map (kbd "C-c C-e f s") 'eclim-java-format)
+;; (define-key eclim-mode-map (kbd "C-c C-e g")   'eclim-java-generate-getter-and-setter)
+;; (define-key eclim-mode-map (kbd "C-c C-e t")   'eclim-run-junit)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; (add-to-list 'hs-special-modes-alist
-;;              '(nxml-mode
-;;                "<!--\\|<[^/>]*[^/]>"
-;;                "-->\\|</[^/>]*[^/]>"
+(require-package 'eclim)
+(require-package 'auto-complete)
+(require-package 'ac-emacs-eclim)
+(require-package 'company-emacs-eclim)
+(require 'eclim)
+(require 'eclimd)
+(add-hook 'java-mode-hook 'eclim-mode)
+(custom-set-variables
+ '(eclim-eclipse-dirs '("/opt/eclipse/jee-neon/eclipse"))
+ '(eclim-executable "/opt/eclipse/jee-neon/eclipse/eclim"))
+(setq eclimd-executable  "/opt/eclipse/jee-neon/eclipse/eclimd")
+(setq eclimd-default-workspace "~/.eclipse_workspace")
+(setq eclimd-wait-for-process nil)
+(setq help-at-pt-display-when-idle t)
+(setq help-at-pt-timer-delay 0.1)
+(help-at-pt-set-timer)
+(require 'auto-complete-config)
+(ac-config-default)
+(require 'ac-emacs-eclim)
+(ac-emacs-eclim-config)
+(require 'company)
+(require 'company-emacs-eclim)
+(company-emacs-eclim-setup)
+(global-company-mode t)
 
-;;                "<!--"
-;;                sgml-skip-tag-forward
-;;                nil))
-;; (add-hook 'nxml-mode-hook 'hs-minor-mode)
-;; ;; optional key bindings, easier than hs defaults
-;; (define-key nxml-mode-map (kbd "C-c h") 'hs-toggle-hiding)
-;;; Hide show, M-x origami-mode
+(use-package eclim-mode
+  :bind (("M-?" . eclim-java-show-documentation-for-current-element)
+         ))
+
+
+
+;;; todo
+(require-package 'hydra)
+(defhydra hydra-zoom (eclim-mode-map "C-c C-e")
+  "zoom"
+  ("?" eclim-java-show-documentation-for-current-element "doc")
+  ("r" eclim-java-find-references "references"))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Scala
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; ensime
+(setq ensime-startup-snapshot-notification nil)
+(require-package 'scala-mode)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; common
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (require 'origami)
 (define-key origami-mode-map (kbd "M-<left>") 'origami-recursively-toggle-node)
 (define-key origami-mode-map (kbd "M-<right>") 'origami-show-only-node)
@@ -649,7 +805,7 @@ Return a list containing the level change and the previous indentation."
 ;; optional key bindings, easier than hs defaults
 (define-key nxml-mode-map (kbd "C-c h") 'hs-toggle-hiding)
 
+(require-package 'use-package)
 (message ">> init-local.el done")
-
 
 (provide 'init-local)

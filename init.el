@@ -12,8 +12,20 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 
-(setq debug-on-error t)
+;; (setq debug-on-error t)
+(setq debug-on-error nil)
 (message ">> init.el start ...")
+
+;;; option 1
+;; (setq package-archives
+;;       '(
+;;         ("popkit" . "https://elpa.popkit.org/packages/")
+;;         ))
+;; ;;; option 2
+;; (setq package-archives
+;;       '(("gnu-cn" . "http://elpa.codefalling.com/gnu/")
+;;         ("org-cn" . "http://elpa.codefalling.com/org/")
+;;         ("melpa-cn" . "http://elpa.codefalling.com/melpa/")))
 
 
 (let ((minver "23.3"))
