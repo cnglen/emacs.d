@@ -169,12 +169,16 @@ unwanted space when exporting org-mode to html."
 (require 'ox-md)
 
 ;;; Planuml
-(setq plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
-(setq org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
+(setq plantuml-jar-path "~/.emacs.d/lib/plantuml/plantuml.jar")
+(setq org-plantuml-jar-path "~/.emacs.d/lib/plantuml/plantuml.jar")
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(;; other Babel languages
    (plantuml . t)))
+
+;;; dot
+(require-package 'graphviz-dot-mode)
+(add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
 
 ;;; taskjuggler
 (require 'ox-taskjuggler)
