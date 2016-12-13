@@ -168,7 +168,9 @@ unwanted space when exporting org-mode to html."
 ;;; org export to md
 (require 'ox-md)
 
-;;; Planuml
+;;; Plantuml
+(require-package 'plantuml-mode)
+(require-package 'flycheck-plantuml)
 (setq plantuml-jar-path "~/.emacs.d/lib/plantuml/plantuml.jar")
 (setq org-plantuml-jar-path "~/.emacs.d/lib/plantuml/plantuml.jar")
 (org-babel-do-load-languages
