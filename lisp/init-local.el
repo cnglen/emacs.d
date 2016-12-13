@@ -128,6 +128,7 @@ unwanted space when exporting org-mode to html."
 
 
 ;;; slide
+(require-package 'ox-reveal)
 (require 'ox-reveal)
 (setq org-reveal-root "file:////opt/reveal.js"
       org-reveal-mathjax t
@@ -237,6 +238,7 @@ resourcereport contact_list \"\" {
 
 "))
 
+;; (require 'ob-mermaid)
 (message ">>   org started done")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -714,6 +716,7 @@ Return a list containing the level change and the previous indentation."
 (company-emacs-eclim-setup)
 (global-company-mode t)
 
+(require-package 'use-package)
 (use-package eclim-mode
   :bind (("M-?" . eclim-java-show-documentation-for-current-element)
          ))
@@ -805,7 +808,7 @@ Return a list containing the level change and the previous indentation."
 ;; optional key bindings, easier than hs defaults
 (define-key nxml-mode-map (kbd "C-c h") 'hs-toggle-hiding)
 
-(require-package 'use-package)
+
 (message ">> init-local.el done")
 
 (provide 'init-local)

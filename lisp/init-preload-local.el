@@ -1,5 +1,5 @@
-(add-to-list 'package-archives
-	     '("popkit" . "https://elpa.popkit.org/packages/"))
+;; (add-to-list 'package-archives
+;; 	     '("popkit" . "https://elpa.popkit.org/packages/"))
 
 ;; (setq package-archives
 ;;       '(
