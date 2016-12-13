@@ -50,6 +50,12 @@
           (lambda () (setq gc-cons-threshold sanityinc/initial-gc-cons-threshold)))
 
 ;;----------------------------------------------------------------------------
+;; Allow users to provide an optional "init-preload-local.el"
+;;----------------------------------------------------------------------------
+(require 'init-preload-local nil t)
+
+
+;;----------------------------------------------------------------------------
 ;; Bootstrap config
 ;;----------------------------------------------------------------------------
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
@@ -59,10 +65,6 @@
 (require 'init-elpa)      ;; Machinery for installing required packages
 (require 'init-exec-path) ;; Set up $PATH
 
-;;----------------------------------------------------------------------------
-;; Allow users to provide an optional "init-preload-local.el"
-;;----------------------------------------------------------------------------
-(require 'init-preload-local nil t)
 
 ;;----------------------------------------------------------------------------
 ;; Load configs for specific features and modes
