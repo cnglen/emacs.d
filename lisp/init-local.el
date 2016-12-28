@@ -69,6 +69,10 @@
 (setq python-shell-interpreter-args "-i --pylab --nosep --pprint") ; alternative
 (setq python-shell-interpreter-args "-i --pprint") ; alternative
 (setq python-shell-virtualenv-root "/opt/anaconda3/")
+
+;;; for ipython5
+(setq python-shell-interpreter "ipython"
+      python-shell-interpreter-args "--simple-prompt -i")
 (message ">>   python done ...")
 
 
@@ -814,6 +818,15 @@ Return a list containing the level change and the previous indentation."
 ;; optional key bindings, easier than hs defaults
 (define-key nxml-mode-map (kbd "C-c h") 'hs-toggle-hiding)
 
+
+;;; ipython notebook
+(require-package 'ein)
+(require 'ein)
+;; (require-package 'smartrep)
+;; (setq ein:use-auto-complete t)
+;; ;; Or, to enable "superpack" (a little bit hacky improvements):
+;; ;; (setq ein:use-auto-complete-superpack t)
+;; (setq ein:use-smartrep t)
 
 (message ">> init-local.el done")
 
