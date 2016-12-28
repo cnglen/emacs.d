@@ -161,6 +161,27 @@ unwanted space when exporting org-mode to html."
 (yas-reload-all)
 (add-hook 'org-mode-hook 'yas-minor-mode)
 
+;;; python doc string of google style
+(defun python-args-to-google-docstring (text &optional make-fields)
+  "Return a reST docstring format for the python arguments in yas-text."
+  (let* ((indent (concat "\n" (make-string (current-column) 32)))
+         (args (python-split-args text))
+         (nr 0)
+         (formatted-args
+          (mapconcat
+           (lambda (x)
+             (concat "    " (nth 0 x)
+                     (if make-fields (format " (${%d:arg%d}): ${%d:arg%d}" (+ nr 1) (+ nr 1) (incf nr 2) nr))
+                     (if (nth 1 x) (concat " \(default " (nth 1 x) "\)"))))
+           args
+           indent)))
+    (unless (string= formatted-args "")
+      (concat
+       (mapconcat 'identity
+                  (list "" "Args:" formatted-args)
+                  indent)
+       "\n"))))
+
 
 ;;; clean tmp file when generating pdf
 (setq org-latex-logfiles-extensions (quote ("lof" "lot" "tex" "tex~" "aux" "idx" "log" "out" "toc" "nav" "snm" "vrb" "dvi" "fdb_latexmk" "blg" "brf" "fls" "entoc" "ps" "spl" "bbl" "_minted")))
@@ -726,7 +747,6 @@ Return a list containing the level change and the previous indentation."
 (use-package eclim-mode
   :bind (("M-?" . eclim-java-show-documentation-for-current-element)
          ))
-
 
 
 ;;; todo
