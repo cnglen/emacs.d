@@ -29,7 +29,7 @@
 
 
 (let ((minver "23.3"))
-  (when (version<= emacs-version "23.1")
+  (when (version<= emacs-version minver)
     (error "Your Emacs is too old -- this config requires v%s or higher" minver)))
 (when (version<= emacs-version "24")
   (message "Your Emacs is old, and some functionality in this config will be disabled. Please upgrade if possible."))
@@ -188,11 +188,14 @@
 ;;----------------------------------------------------------------------------
 (require 'init-locales)
 
+
 (add-hook 'after-init-hook
           (lambda ()
             (message "init completed in %.2fms"
                      (sanityinc/time-subtract-millis after-init-time before-init-time))))
 (message ">> init.el done")
+
+
 
 (provide 'init)
 

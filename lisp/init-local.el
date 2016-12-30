@@ -78,6 +78,7 @@
 ;;; ORG-MODE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (message ">>   org started ...")
+(require-package 'org)
 ;; org export to pdf
 (when (require 'ox-latex nil 'noerror)
   ;; You need to install pygments to use minted
