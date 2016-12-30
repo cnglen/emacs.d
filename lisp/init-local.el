@@ -129,6 +129,7 @@ unwanted space when exporting org-mode to html."
 
 
 ;;; slide
+(require-package 'ox-reveal)
 (require 'ox-reveal)
 (setq org-reveal-root "file:////opt/reveal.js"
       org-reveal-mathjax t
@@ -161,6 +162,27 @@ unwanted space when exporting org-mode to html."
 (yas-reload-all)
 (add-hook 'org-mode-hook 'yas-minor-mode)
 
+;;; python doc string of google style
+(defun python-args-to-google-docstring (text &optional make-fields)
+  "Return a reST docstring format for the python arguments in yas-text."
+  (let* ((indent (concat "\n" (make-string (current-column) 32)))
+         (args (python-split-args text))
+         (nr 0)
+         (formatted-args
+          (mapconcat
+           (lambda (x)
+             (concat "    " (nth 0 x)
+                     (if make-fields (format " (${%d:arg%d}): ${%d:arg%d}" (+ nr 1) (+ nr 1) (incf nr 2) nr))
+                     (if (nth 1 x) (concat " \(default " (nth 1 x) "\)"))))
+           args
+           indent)))
+    (unless (string= formatted-args "")
+      (concat
+       (mapconcat 'identity
+                  (list "" "Args:" formatted-args)
+                  indent)
+       "\n"))))
+
 
 ;;; clean tmp file when generating pdf
 (setq org-latex-logfiles-extensions (quote ("lof" "lot" "tex" "tex~" "aux" "idx" "log" "out" "toc" "nav" "snm" "vrb" "dvi" "fdb_latexmk" "blg" "brf" "fls" "entoc" "ps" "spl" "bbl" "_minted")))
@@ -168,13 +190,19 @@ unwanted space when exporting org-mode to html."
 ;;; org export to md
 (require 'ox-md)
 
-;;; Planuml
-(setq plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
-(setq org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
+;;; Plantuml
+(require-package 'plantuml-mode)
+(require-package 'flycheck-plantuml)
+(setq plantuml-jar-path "~/.emacs.d/lib/plantuml/plantuml.jar")
+(setq org-plantuml-jar-path "~/.emacs.d/lib/plantuml/plantuml.jar")
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(;; other Babel languages
    (plantuml . t)))
+
+;;; dot
+(require-package 'graphviz-dot-mode)
+(add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
 
 ;;; taskjuggler
 (require 'ox-taskjuggler)
@@ -238,6 +266,7 @@ resourcereport contact_list \"\" {
 
 "))
 
+;; (require 'ob-mermaid)
 (message ">>   org started done")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -715,10 +744,10 @@ Return a list containing the level change and the previous indentation."
 (company-emacs-eclim-setup)
 (global-company-mode t)
 
+(require-package 'use-package)
 (use-package eclim-mode
   :bind (("M-?" . eclim-java-show-documentation-for-current-element)
          ))
-
 
 
 ;;; todo
@@ -806,7 +835,7 @@ Return a list containing the level change and the previous indentation."
 ;; optional key bindings, easier than hs defaults
 (define-key nxml-mode-map (kbd "C-c h") 'hs-toggle-hiding)
 
-(require-package 'use-package)
+
 (message ">> init-local.el done")
 
 (provide 'init-local)

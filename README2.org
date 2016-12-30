@@ -1,0 +1,8 @@
+* 说明
+  - This repo is forked from purcell's emacs.d
+  - add some configuration for my personal useage
+
+* Install
+  如果报错,请尝试:
+  - remove elpa/org*
+  - remove elpa/org-org-plus-contrib-*

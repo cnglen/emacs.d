@@ -1,0 +1,5 @@
+* plantuml
+  https://dl.dropboxusercontent.com/u/13064071/plantuml.jar
+
+* jlatexmath
+  https://dl.dropboxusercontent.com/u/13064071/plantuml-jlatexmath.zip
