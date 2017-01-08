@@ -69,6 +69,10 @@
 (setq python-shell-interpreter-args "-i --pylab --nosep --pprint") ; alternative
 (setq python-shell-interpreter-args "-i --pprint") ; alternative
 (setq python-shell-virtualenv-root "/opt/anaconda3/")
+
+;;; for ipython5
+(setq python-shell-interpreter "ipython"
+      python-shell-interpreter-args "--simple-prompt -i")
 (message ">>   python done ...")
 
 
@@ -750,6 +754,15 @@ Return a list containing the level change and the previous indentation."
          ))
 
 
+(require 'google-java-format)
+(setq google-java-format-executable "~/.emacs.d/lib/google-java-format/google-java-format-1.1-all-deps.jar")
+;; (define-key java-mode-map (kbd "C-M-\\") 'google-java-format-region)
+(defun google-java-format-enable-on-save ()
+  "Pre-save hook to be used before running autopep8."
+  (interactive)
+  (add-hook 'before-save-hook 'google-java-format-buffer nil t))
+(add-hook 'java-mode-hook 'google-java-format-enable-on-save)
+
 ;;; todo
 (require-package 'hydra)
 (defhydra hydra-zoom (eclim-mode-map "C-c C-e")
@@ -834,6 +847,16 @@ Return a list containing the level change and the previous indentation."
 (add-hook 'nxml-mode-hook 'hs-minor-mode)
 ;; optional key bindings, easier than hs defaults
 (define-key nxml-mode-map (kbd "C-c h") 'hs-toggle-hiding)
+
+
+;;; ipython notebook
+(require-package 'ein)
+(require 'ein)
+;; (require-package 'smartrep)
+;; (setq ein:use-auto-complete t)
+;; ;; Or, to enable "superpack" (a little bit hacky improvements):
+;; ;; (setq ein:use-auto-complete-superpack t)
+;; (setq ein:use-smartrep t)
 
 
 (message ">> init-local.el done")
