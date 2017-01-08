@@ -762,7 +762,6 @@ Return a list containing the level change and the previous indentation."
   (add-hook 'before-save-hook 'google-java-format-buffer nil t))
 (add-hook 'java-mode-hook 'google-java-format-enable-on-save)
 
-
 ;;; todo
 (require-package 'hydra)
 (defhydra hydra-zoom (eclim-mode-map "C-c C-e")
