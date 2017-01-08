@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: mpl
+# key: mpl
+# group : user define
+# --
+import matplotlib as mpl
+try:
+    mpl.use('Agg')              # without this line, server will raise error: DISPLAY not defined.
+except:
+    pass
+$0

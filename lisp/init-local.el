@@ -165,6 +165,27 @@ unwanted space when exporting org-mode to html."
 (yas-reload-all)
 (add-hook 'org-mode-hook 'yas-minor-mode)
 
+;;; python doc string of google style
+(defun python-args-to-google-docstring (text &optional make-fields)
+  "Return a reST docstring format for the python arguments in yas-text."
+  (let* ((indent (concat "\n" (make-string (current-column) 32)))
+         (args (python-split-args text))
+         (nr 0)
+         (formatted-args
+          (mapconcat
+           (lambda (x)
+             (concat "    " (nth 0 x)
+                     (if make-fields (format " (${%d:arg%d}): ${%d:arg%d}" (+ nr 1) (+ nr 1) (incf nr 2) nr))
+                     (if (nth 1 x) (concat " \(default " (nth 1 x) "\)"))))
+           args
+           indent)))
+    (unless (string= formatted-args "")
+      (concat
+       (mapconcat 'identity
+                  (list "" "Args:" formatted-args)
+                  indent)
+       "\n"))))
+
 
 ;;; clean tmp file when generating pdf
 (setq org-latex-logfiles-extensions (quote ("lof" "lot" "tex" "tex~" "aux" "idx" "log" "out" "toc" "nav" "snm" "vrb" "dvi" "fdb_latexmk" "blg" "brf" "fls" "entoc" "ps" "spl" "bbl" "_minted")))
@@ -732,6 +753,15 @@ Return a list containing the level change and the previous indentation."
          ))
 
 
+(require 'google-java-format)
+(setq google-java-format-executable "~/.emacs.d/lib/google-java-format/google-java-format-1.1-all-deps.jar")
+;; (define-key java-mode-map (kbd "C-M-\\") 'google-java-format-region)
+(defun google-java-format-enable-on-save ()
+  "Pre-save hook to be used before running autopep8."
+  (interactive)
+  (add-hook 'before-save-hook 'google-java-format-buffer nil t))
+(add-hook 'java-mode-hook 'google-java-format-enable-on-save)
+
 
 ;;; todo
 (require-package 'hydra)
@@ -827,6 +857,7 @@ Return a list containing the level change and the previous indentation."
 ;; ;; Or, to enable "superpack" (a little bit hacky improvements):
 ;; ;; (setq ein:use-auto-complete-superpack t)
 ;; (setq ein:use-smartrep t)
+
 
 (message ">> init-local.el done")
 
