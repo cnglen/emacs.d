@@ -144,7 +144,9 @@ unwanted space when exporting org-mode to html."
       org-reveal-margin "-1"
       org-reveal-min-scale "0.8"
       org-reveal-max-scale "2.0"
+      org-reveal-extra-css "file:////home/touch/.emacs.d/lib/local.css"
       )
+
 
 ;; (defunsacha/org-html-checkbox (checkbox)
 ;;   "Format CHECKBOX into HTML."
