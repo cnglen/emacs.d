@@ -738,6 +738,7 @@ Return a list containing the level change and the previous indentation."
 (setq eclimd-executable  "/opt/eclipse/jee-neon/eclipse/eclimd")
 (setq eclimd-default-workspace "~/.eclipse_workspace")
 (setq eclimd-wait-for-process nil)
+(setq eclim-accepted-file-regexps  '("\\.java$")) ; use eclim only for java
 (setq help-at-pt-display-when-idle t)
 (setq help-at-pt-timer-delay 0.1)
 (help-at-pt-set-timer)
@@ -777,8 +778,12 @@ Return a list containing the level change and the previous indentation."
 ;;; Scala
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; ensime
-(setq ensime-startup-snapshot-notification nil)
 (require-package 'scala-mode)
+(require-package 'ensime)
+(use-package ensime
+  :ensure t
+  :pin melpa-stable)
+(setq ensime-startup-snapshot-notification nil)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; common
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
