@@ -1,3 +1,38 @@
 .reveal p {
     text-align: left;
 }
+
+.reveal strong, .reveal b {
+    font-weight: bold;
+    color: #D1D0CE;
+}
+
+.reveal .slide-number {
+    color: #268bd2;
+}
+
+.reveal table {
+    max-width: 100%;
+    max-height: 95%;
+    font-size: 90%;
+    /* font-size: large; */
+}
+
+.reveal table .org-left{
+    text-align: left;
+}
+
+.reveal table .org-right{
+    text-align: right;
+}
+
+.reveal section img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* to make max-height for figure 95% work */
+.reveal div.figure p {
+    height: 90vh;         /*max height of screen*/
+}

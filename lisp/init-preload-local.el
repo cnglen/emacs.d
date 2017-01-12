@@ -1,7 +1,10 @@
 (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
                          ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
 			 ("org"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+                         ("melpa-stable" . "http://stable.melpa.org/packages/")
 			 ))
+
+
 (package-initialize) ;; You might already have this line
 
 ;; (add-to-list 'package-archives

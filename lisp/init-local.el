@@ -136,15 +136,15 @@ unwanted space when exporting org-mode to html."
 (require-package 'ox-reveal)
 (require 'ox-reveal)
 (setq org-reveal-root "file:////opt/reveal.js"
-      org-reveal-mathjax t
-      org-reveal-hlevel 1
-      org-reveal-single-file nil
-      org-reveal-width 1600
-      org-reveal-height 793
+      org-reveal-mathjax t              ; t or nil
+      org-reveal-hlevel 1 ; The minimum level of headings that should be grouped into vertical slides.
+      org-reveal-single-file t        ; t or nil
+      org-reveal-width (frame-pixel-width) ; auto detect the width of monitor
+      org-reveal-height (frame-pixel-height) ;auto detect the height of monitor
       org-reveal-margin "-1"
-      org-reveal-min-scale "0.8"
-      org-reveal-max-scale "2.0"
-      org-reveal-extra-css "file:////home/touch/.emacs.d/lib/local.css"
+      org-reveal-min-scale "-1"
+      org-reveal-max-scale "-1"
+      org-reveal-extra-css (concat "file:///" (getenv "HOME") "/.emacs.d/lib/local.css")
       )
 
 
@@ -738,6 +738,7 @@ Return a list containing the level change and the previous indentation."
 (setq eclimd-executable  "/opt/eclipse/jee-neon/eclipse/eclimd")
 (setq eclimd-default-workspace "~/.eclipse_workspace")
 (setq eclimd-wait-for-process nil)
+(setq eclim-accepted-file-regexps  '("\\.java$")) ; use eclim only for java
 (setq help-at-pt-display-when-idle t)
 (setq help-at-pt-timer-delay 0.1)
 (help-at-pt-set-timer)
@@ -777,6 +778,11 @@ Return a list containing the level change and the previous indentation."
 ;;; Scala
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; ensime
+(require-package 'scala-mode)
+(require-package 'ensime)
+(use-package ensime
+  :ensure t
+  :pin melpa-stable)
 (setq ensime-startup-snapshot-notification nil)
 (require-package 'scala-mode)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
