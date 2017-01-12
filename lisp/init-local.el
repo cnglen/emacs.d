@@ -137,7 +137,7 @@ unwanted space when exporting org-mode to html."
 (require 'ox-reveal)
 (setq org-reveal-root "file:////opt/reveal.js"
       org-reveal-mathjax t
-      org-reveal-hlevel 1 ; The minimum level of headings that should be grouped into vertical slides.
+      org-reveal-hlevel 1
       org-reveal-single-file nil
       org-reveal-width 1600
       org-reveal-height 793
@@ -708,7 +708,7 @@ Return a list containing the level change and the previous indentation."
 ;;; Usage
 ;;;
 ;;; 1) M-x start-eclimd or /opt/eclipse/jee-neon/eclipse/eclimd
-;;; 2) M-x eclim-project- create or /opt/eclipse/jee-neon/eclipse/eclim -command project_create -f ~/workspace/thinking-in-java -n java -p eclim_project
+;;; 2) M-x eclim-project-create or /opt/eclipse/jee-neon/eclipse/eclim -command project_create -f ~/workspace/thinking-in-java -n java -p eclim_project
 ;;;
 ;; (define-key eclim-mode-map (kbd "C-c C-e s")   'eclim-java-method-signature-at-point)
 ;; (define-key eclim-mode-map (kbd "C-c C-e f d") 'eclim-java-find-declaration)
@@ -759,11 +759,11 @@ Return a list containing the level change and the previous indentation."
 (require 'google-java-format)
 (setq google-java-format-executable "~/.emacs.d/lib/google-java-format/google-java-format-1.1-all-deps.jar")
 ;; (define-key java-mode-map (kbd "C-M-\\") 'google-java-format-region)
-(defun google-java-format-enable-on-save ()
-  "Pre-save hook to be used before running autopep8."
-  (interactive)
-  (add-hook 'before-save-hook 'google-java-format-buffer nil t))
-(add-hook 'java-mode-hook 'google-java-format-enable-on-save)
+;; (defun google-java-format-enable-on-save ()
+;;   "Pre-save hook to be used before running autopep8."
+;;   (interactive)
+;;   (add-hook 'before-save-hook 'google-java-format-buffer nil t))
+;; (add-hook 'java-mode-hook 'google-java-format-enable-on-save)
 
 ;;; todo
 (require-package 'hydra)
