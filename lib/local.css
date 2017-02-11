@@ -7,9 +7,16 @@
     color: #D1D0CE;
 }
 
+i, cite, em, var, address, dfn {
+    font-style: italic;
+    color: #45a04e;
+}
+
 .reveal .slide-number {
     color: #268bd2;
 }
+
+
 
 .reveal table {
     max-width: 100%;
