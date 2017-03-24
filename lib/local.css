@@ -40,6 +40,13 @@ i, cite, em, var, address, dfn {
 }
 
 /* to make max-height for figure 95% work */
+/* vw: viewpoint width, 1vw = 1% width */
+/* vh: viewpoint height, 1vh = 1% height */
+
 .reveal div.figure p {
     height: 90vh;         /*max height of screen*/
 }
+
+/* .reveal img { */
+/*     min-width: 80%; */
+/* } */

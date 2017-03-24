@@ -133,12 +133,13 @@ unwanted space when exporting org-mode to html."
 
 
 ;;; slide
+;;; NOTE: using the single html for presentation; If you want to export pdf, change org-reveal-single-file to nil
 (require-package 'ox-reveal)
 (require 'ox-reveal)
 (setq org-reveal-root "file:////opt/reveal.js"
       org-reveal-mathjax t              ; t or nil
       org-reveal-hlevel 1 ; The minimum level of headings that should be grouped into vertical slides.
-      org-reveal-single-file t        ; t or nil
+      org-reveal-single-file t          ; t or nil
       org-reveal-width (frame-pixel-width) ; auto detect the width of monitor
       org-reveal-height (frame-pixel-height) ;auto detect the height of monitor
       org-reveal-margin "-1"
