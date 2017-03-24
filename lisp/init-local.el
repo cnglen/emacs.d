@@ -793,6 +793,35 @@ Return a list containing the level change and the previous indentation."
 (define-key origami-mode-map (kbd "M-<left>") 'origami-recursively-toggle-node)
 (define-key origami-mode-map (kbd "M-<right>") 'origami-show-only-node)
 
+;;; disable origami for python-mode, using hs-minor mode
+;;; See https://github.com/gregsexton/origami.el/issues/55
+(setq origami-parser-alist (delete '(python-mode . origami-python-parser) origami-parser-alist))
+;; (add-hook 'python-mode-hook 'hs-minor-mode)
+(defun py-outline-level ()
+  (let (buffer-invisibility-spec)
+    (save-excursion
+      (skip-chars-forward "\t ")
+      (current-column))))
+(defun hide-body-recenter ()
+  (interactive)
+  (hide-body)
+  (recenter))
+(defun my-pythonFold-hook ()
+  (setq outline-regexp "[^ \t\n]\\|[ \t]*\\(def[ \t]+\\|class[ \t]+\\)")
+  (setq outline-level 'py-outline-level)
+  (outline-minor-mode t)
+  (define-key python-mode-map (kbd "C-<kp-subtract>") 'outline-hide-body-recenter)
+  (define-key python-mode-map (kbd "C-<kp-add>") 'outline-show-all)
+  (define-key python-mode-map (kbd "C-S-<kp-subtract>") 'outline-hide-subtree)
+  (define-key python-mode-map (kbd "C-S-<kp-add>") 'outline-show-subtree))
+(add-hook 'python-mode-hook 'my-pythonFold-hook)
+
+(require-package 'outshine)
+(add-hook 'python-mode-hook 'outline-minor-mode)
+(add-hook 'outline-minor-mode-hook 'outshine-hook-function)
+
+
+
 
 
 ;; ;;; C/C++
