@@ -797,7 +797,7 @@ Return a list containing the level change and the previous indentation."
 ;;; disable origami for python-mode, using hs-minor mode
 ;;; See https://github.com/gregsexton/origami.el/issues/55
 (setq origami-parser-alist (delete '(python-mode . origami-python-parser) origami-parser-alist))
-;; (add-hook 'python-mode-hook 'hs-minor-mode)
+(add-hook 'python-mode-hook 'hs-minor-mode)
 (defun py-outline-level ()
   (let (buffer-invisibility-spec)
     (save-excursion
@@ -811,24 +811,14 @@ Return a list containing the level change and the previous indentation."
   (setq outline-regexp "[^ \t\n]\\|[ \t]*\\(def[ \t]+\\|class[ \t]+\\)")
   (setq outline-level 'py-outline-level)
   (outline-minor-mode t)
+  (origami-mode -1)
   )
 (add-hook 'python-mode-hook 'my-pythonFold-hook)
 (require-package 'outline-magic)
 (eval-after-load 'outline
   '(progn
      (require 'outline-magic)
-     (define-key outline-minor-mode-map (kbd "<C-tab>") 'outline-cycle)))
-;;; todo C-tab, change to alt + left?
-
-
-
-;; (require-package 'outshine)
-;; (add-hook 'python-mode-hook 'outline-minor-mode)
-;; (add-hook 'outline-minor-mode-hook 'outshine-hook-function)
-
-
-
-
+     (define-key outline-minor-mode-map (kbd "M-<left>") 'outline-cycle)))
 
 ;; ;;; C/C++
 ;; (require 'xcscope)
