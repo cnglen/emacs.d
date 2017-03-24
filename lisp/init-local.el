@@ -811,15 +811,20 @@ Return a list containing the level change and the previous indentation."
   (setq outline-regexp "[^ \t\n]\\|[ \t]*\\(def[ \t]+\\|class[ \t]+\\)")
   (setq outline-level 'py-outline-level)
   (outline-minor-mode t)
-  (define-key python-mode-map (kbd "C-<kp-subtract>") 'outline-hide-body-recenter)
-  (define-key python-mode-map (kbd "C-<kp-add>") 'outline-show-all)
-  (define-key python-mode-map (kbd "C-S-<kp-subtract>") 'outline-hide-subtree)
-  (define-key python-mode-map (kbd "C-S-<kp-add>") 'outline-show-subtree))
+  )
 (add-hook 'python-mode-hook 'my-pythonFold-hook)
+(require-package 'outline-magic)
+(eval-after-load 'outline
+  '(progn
+     (require 'outline-magic)
+     (define-key outline-minor-mode-map (kbd "<C-tab>") 'outline-cycle)))
+;;; todo C-tab, change to alt + left?
 
-(require-package 'outshine)
-(add-hook 'python-mode-hook 'outline-minor-mode)
-(add-hook 'outline-minor-mode-hook 'outshine-hook-function)
+
+
+;; (require-package 'outshine)
+;; (add-hook 'python-mode-hook 'outline-minor-mode)
+;; (add-hook 'outline-minor-mode-hook 'outshine-hook-function)
 
 
 
