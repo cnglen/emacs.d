@@ -6,3 +6,9 @@
   Èç¹û±¨´í,Çë³¢ÊÔ:
   - remove elpa/org*
   - remove elpa/org-org-plus-contrib-*
+
+
+* update log
+
+  - gpg to decrypt/encrypt
+  - lib/*.asc: passphrase 0***g*n
