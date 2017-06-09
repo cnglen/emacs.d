@@ -703,89 +703,93 @@ Return a list containing the level change and the previous indentation."
 ;;; pandoc-mode
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Java
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Usage
-;;;
-;;; 1) M-x start-eclimd or /opt/eclipse/jee-neon/eclipse/eclimd
-;;; 2) M-x eclim-project-create or /opt/eclipse/jee-neon/eclipse/eclim -command project_create -f ~/workspace/thinking-in-java -n java -p eclim_project
-;;;
-;; (define-key eclim-mode-map (kbd "C-c C-e s")   'eclim-java-method-signature-at-point)
-;; (define-key eclim-mode-map (kbd "C-c C-e f d") 'eclim-java-find-declaration)
-;; (define-key eclim-mode-map (kbd "C-c C-e f r") 'eclim-java-find-references)
-;; (define-key eclim-mode-map (kbd "C-c C-e f t") 'eclim-java-find-type)
-;; (define-key eclim-mode-map (kbd "C-c C-e f f") 'eclim-java-find-generic)
-;; (define-key eclim-mode-map (kbd "C-c C-e r")   'eclim-java-refactor-rename-symbol-at-point)
-;; (define-key eclim-mode-map (kbd "C-c C-e i")   'eclim-java-import-organize)
-;; (define-key eclim-mode-map (kbd "C-c C-e h")   'eclim-java-hierarchy)
-;; (define-key eclim-mode-map (kbd "C-c C-e z")   'eclim-java-implement)
-;; (define-key eclim-mode-map (kbd "C-c C-e d")   'eclim-java-doc-comment)
-;; (define-key eclim-mode-map (kbd "C-c C-e f s") 'eclim-java-format)
-;; (define-key eclim-mode-map (kbd "C-c C-e g")   'eclim-java-generate-getter-and-setter)
-;; (define-key eclim-mode-map (kbd "C-c C-e t")   'eclim-run-junit)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;;; Java
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;;; Usage
+;; ;;;
+;; ;;; 1) M-x start-eclimd or /opt/eclipse/jee-neon/eclipse/eclimd
+;; ;;; 2) M-x eclim-project-create or /opt/eclipse/jee-neon/eclipse/eclim -command project_create -f ~/workspace/thinking-in-java -n java -p eclim_project
+;; ;;;
+;; ;; (define-key eclim-mode-map (kbd "C-c C-e s")   'eclim-java-method-signature-at-point)
+;; ;; (define-key eclim-mode-map (kbd "C-c C-e f d") 'eclim-java-find-declaration)
+;; ;; (define-key eclim-mode-map (kbd "C-c C-e f r") 'eclim-java-find-references)
+;; ;; (define-key eclim-mode-map (kbd "C-c C-e f t") 'eclim-java-find-type)
+;; ;; (define-key eclim-mode-map (kbd "C-c C-e f f") 'eclim-java-find-generic)
+;; ;; (define-key eclim-mode-map (kbd "C-c C-e r")   'eclim-java-refactor-rename-symbol-at-point)
+;; ;; (define-key eclim-mode-map (kbd "C-c C-e i")   'eclim-java-import-organize)
+;; ;; (define-key eclim-mode-map (kbd "C-c C-e h")   'eclim-java-hierarchy)
+;; ;; (define-key eclim-mode-map (kbd "C-c C-e z")   'eclim-java-implement)
+;; ;; (define-key eclim-mode-map (kbd "C-c C-e d")   'eclim-java-doc-comment)
+;; ;; (define-key eclim-mode-map (kbd "C-c C-e f s") 'eclim-java-format)
+;; ;; (define-key eclim-mode-map (kbd "C-c C-e g")   'eclim-java-generate-getter-and-setter)
+;; ;; (define-key eclim-mode-map (kbd "C-c C-e t")   'eclim-run-junit)
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(require-package 'eclim)
-(require-package 'auto-complete)
-(require-package 'ac-emacs-eclim)
-(require-package 'company-emacs-eclim)
-(require 'eclim)
-(require 'eclimd)
-(add-hook 'java-mode-hook 'eclim-mode)
-(custom-set-variables
- '(eclim-eclipse-dirs '("/opt/eclipse/jee-neon/eclipse"))
- '(eclim-executable "/opt/eclipse/jee-neon/eclipse/eclim"))
-(setq eclimd-executable  "/opt/eclipse/jee-neon/eclipse/eclimd")
-(setq eclimd-default-workspace "~/.eclipse_workspace")
-(setq eclimd-wait-for-process nil)
-(setq eclim-accepted-file-regexps  '("\\.java$")) ; use eclim only for java
-(setq help-at-pt-display-when-idle t)
-(setq help-at-pt-timer-delay 0.1)
-(help-at-pt-set-timer)
-(require 'auto-complete-config)
-(ac-config-default)
-(require 'ac-emacs-eclim)
-(ac-emacs-eclim-config)
-(require 'company)
-(require 'company-emacs-eclim)
-(company-emacs-eclim-setup)
-(global-company-mode t)
+;; (require-package 'eclim)
+;; (require-package 'auto-complete)
+;; (require-package 'ac-emacs-eclim)
+;; (require-package 'company-emacs-eclim)
+;; (require 'eclim)
+;; (require 'eclimd)
+;; (add-hook 'java-mode-hook 'eclim-mode)
+;; (custom-set-variables
+;;  '(eclim-eclipse-dirs '("/opt/eclipse/jee-neon/eclipse"))
+;;  '(eclim-executable "/opt/eclipse/jee-neon/eclipse/eclim"))
+;; (setq eclimd-executable  "/opt/eclipse/jee-neon/eclipse/eclimd")
+;; (setq eclimd-default-workspace "~/.eclipse_workspace")
+;; (setq eclimd-wait-for-process nil)
+;; (setq eclim-accepted-file-regexps  '("\\.java$")) ; use eclim only for java
+;; (setq help-at-pt-display-when-idle t)
+;; (setq help-at-pt-timer-delay 0.1)
+;; (help-at-pt-set-timer)
+;; (require 'auto-complete-config)
+;; (ac-config-default)
+;; (require 'ac-emacs-eclim)
+;; (ac-emacs-eclim-config)
+;; (require 'company)
+;; (require 'company-emacs-eclim)
+;; (company-emacs-eclim-setup)
+;; (global-company-mode t)
 
-(require-package 'use-package)
-(use-package eclim-mode
-  :bind (("M-?" . eclim-java-show-documentation-for-current-element)
-         ))
+;; (require-package 'use-package)
+;; (use-package eclim-mode
+;;   :bind (("M-?" . eclim-java-show-documentation-for-current-element)
+;;          ))
 
 
-(require 'google-java-format)
-(setq google-java-format-executable "~/.emacs.d/lib/google-java-format/google-java-format-1.1-all-deps.jar")
-;; (define-key java-mode-map (kbd "C-M-\\") 'google-java-format-region)
-;; (defun google-java-format-enable-on-save ()
-;;   "Pre-save hook to be used before running autopep8."
-;;   (interactive)
-;;   (add-hook 'before-save-hook 'google-java-format-buffer nil t))
-;; (add-hook 'java-mode-hook 'google-java-format-enable-on-save)
+;; (require 'google-java-format)
+;; (setq google-java-format-executable "~/.emacs.d/lib/google-java-format/google-java-format-1.1-all-deps.jar")
+;; ;; (define-key java-mode-map (kbd "C-M-\\") 'google-java-format-region)
+;; ;; (defun google-java-format-enable-on-save ()
+;; ;;   "Pre-save hook to be used before running autopep8."
+;; ;;   (interactive)
+;; ;;   (add-hook 'before-save-hook 'google-java-format-buffer nil t))
+;; ;; (add-hook 'java-mode-hook 'google-java-format-enable-on-save)
 
-;;; todo
-(require-package 'hydra)
-(defhydra hydra-zoom (eclim-mode-map "C-c C-e")
-  "zoom"
-  ("?" eclim-java-show-documentation-for-current-element "doc")
-  ("r" eclim-java-find-references "references"))
+;; ;;; todo
+;; (require-package 'hydra)
+;; (defhydra hydra-zoom (eclim-mode-map "C-c C-e")
+;;   "zoom"
+;;   ("?" eclim-java-show-documentation-for-current-element "doc")
+;;   ("r" eclim-java-find-references "references"))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Scala
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; ensime
+(setq ensime-startup-snapshot-notification nil)
 (require-package 'scala-mode)
 (require-package 'ensime)
 (use-package ensime
   :ensure t
   :pin melpa-stable)
-(setq ensime-startup-snapshot-notification nil)
-(require-package 'scala-mode)
+
+(use-package flycheck-cask
+  :commands flycheck-cask-setup
+  :config (add-hook 'emacs-lisp-mode-hook (flycheck-cask-setup)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; common
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
