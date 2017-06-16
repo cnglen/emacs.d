@@ -2,6 +2,6 @@
 # name: ipython
 # key: _ipy
 # --
-#+BEGIN_SRC ipython :session :exports both
+#+BEGIN_SRC ipython :session :exports both :cache yes
 $0
 #+END_SRC
