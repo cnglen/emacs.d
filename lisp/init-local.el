@@ -889,6 +889,13 @@ Return a list containing the level change and the previous indentation."
 ;; ;; (setq ein:use-auto-complete-superpack t)
 ;; (setq ein:use-smartrep t)
 
+;;; jd
+;; (setq tramp-verbose 100)
+;;;
+
+(add-to-list 'tramp-remote-process-environment
+             (format "DISPLAY=%s" (getenv "DISPLAY")))
+(require 'init-jd)
 
 (message ">> init-local.el done")
 
