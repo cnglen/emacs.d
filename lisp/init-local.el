@@ -50,18 +50,16 @@
 (require 'py-autopep8)
 (setq py-autopep8-options '("--max-line-length=120"))
 (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
-
 (add-hook 'python-mode-hook (lambda ()
                               (require 'sphinx-doc)
                               (sphinx-doc-mode t)))
-
 (setq python-shell-interpreter "python") ; to use ob-ipython
 (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
-;;; for ipython5
+;;; for ipython5, See http://ipython.readthedocs.io/en/stable/whatsnew/version5.html#id1
+(setq python-shell-virtualenv-root "/opt/anaconda3/")
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args "--simple-prompt -i")
-
 (message ">>   python done ...")
 
 
@@ -151,6 +149,13 @@ unwanted space when exporting org-mode to html."
 (require 'ob-ipython)
 (setq org-confirm-babel-evaluate nil) ; don't prompt me to confirm everytime I want to evaluate a block
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append) ; display/update images in the buffer after I evaluate
+;;; <-------------------------------------- NOTE
+;;; ob-ipython.el: in ob-ipython--launch-driver, change the order (or "python" python-shell-interpreter))
+;;; or manual set up
+;; (elpy-enable)
+;; (setq python-shell-interpreter "python") ; to use ob-ipython
+;; ;; (elpy-use-ipython)                        ; disabled to use ob-ipython
+;; ;; (setq python-shell-interpreter "ipython") ; disabled to use ob-ipython
 
 ;;; yasnippet
 (require 'yasnippet)
@@ -883,6 +888,16 @@ Return a list containing the level change and the previous indentation."
 ;; ;; Or, to enable "superpack" (a little bit hacky improvements):
 ;; ;; (setq ein:use-auto-complete-superpack t)
 ;; (setq ein:use-smartrep t)
+
+;;; jd
+;; (setq tramp-verbose 100)
+;;;
+
+(add-to-list 'tramp-remote-process-environment
+             (format "DISPLAY=%s" (getenv "DISPLAY")))
+(when (file-exists-p "init-jd.el")
+  (require 'init-jd)
+  )
 
 
 ;;; maven
