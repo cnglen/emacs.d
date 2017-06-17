@@ -54,25 +54,14 @@
 (add-hook 'python-mode-hook (lambda ()
                               (require 'sphinx-doc)
                               (sphinx-doc-mode t)))
-;; (elpy-enable)
-;; ;; (setq python-shell-interpreter "ipython"
-;; ;;       python-shell-interpreter-args "--simple-prompt -i")
-;; (setq python-shell-interpreter "python") ; to use ob-ipython
-;; ;; (elpy-use-ipython)                        ; disabled to use ob-ipython
-;; ;; (setq python-shell-interpreter "ipython") ; disabled to use ob-ipython
-;; (setq python-shell-interpreter "ipython3") ; alternative
-;; (setq python-shell-interpreter-args "--pylab --nosep --pprint") ; alternative
-;; (add-hook 'python-mode-hook 'hs-minor-mode)
+
+(setq python-shell-interpreter "python") ; to use ob-ipython
 (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
-(setq python-shell-interpreter "ipython")
-(setq python-shell-interpreter-args "-i --pylab --nosep --pprint") ; alternative
-(setq python-shell-interpreter-args "-i --pprint") ; alternative
-(setq python-shell-virtualenv-root "/opt/anaconda3/")
-
 ;;; for ipython5
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args "--simple-prompt -i")
+
 (message ">>   python done ...")
 
 
@@ -896,6 +885,11 @@ Return a list containing the level change and the previous indentation."
 ;; (setq ein:use-smartrep t)
 
 
+;;; maven
+(add-to-list 'load-path "~/.emacs.d/site-lisp/maven-pom-mode")
+(load "maven-pom-mode")
 (message ">> init-local.el done")
+
+
 
 (provide 'init-local)
