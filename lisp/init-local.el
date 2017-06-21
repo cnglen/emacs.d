@@ -58,8 +58,8 @@
 
 ;;; for ipython5, See http://ipython.readthedocs.io/en/stable/whatsnew/version5.html#id1
 (setq python-shell-virtualenv-root "/opt/anaconda3/")
-(setq python-shell-interpreter "ipython"
-      python-shell-interpreter-args "--simple-prompt -i")
+;; (setq python-shell-interpreter "ipython"
+;;       python-shell-interpreter-args "--simple-prompt -i")
 (message ">>   python done ...")
 
 
@@ -423,7 +423,7 @@ you define your own `sql-mode-hive-font-lock-keywords'.")
                                         "set"
                                         "create" "drop" "truncate"
                                         "use" "describe" "show" "limit" "sort" "partitioned" "comment" ; added by gang
-                                        "--" ) t) "\\(\\b\\|\\s-\\)\\)\\|\\(^```$\\)"))
+                                        ) t) "\\(\\b\\|\\s-\\)\\)\\|\\(^```$\\)"))
 
 (defun sql-indent-level-delta (&optional prev-start prev-indent)
   "Calculate the change in level from the previous non-blank line.
@@ -897,6 +897,15 @@ Return a list containing the level change and the previous indentation."
              (format "DISPLAY=%s" (getenv "DISPLAY")))
 (require 'init-jd)
 
+;;; company dict
+(require 'company-dict)
+;; Where to look for dictionary files. Default is ~/.emacs.d/dict
+(setq company-dict-dir (concat user-emacs-directory "dict/"))
+;; Optional: if you want it available everywhere
+(add-to-list 'company-backends 'company-dict)
+;; Optional: evil-mode users may prefer binding this to C-x C-k for vim
+;; omni-completion-like dictionary completion
+;; (define-key evil-insert-state-map (kbd "C-x C-k") 'company-dict)
 (message ">> init-local.el done")
 
 (provide 'init-local)
