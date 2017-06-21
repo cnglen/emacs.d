@@ -53,9 +53,9 @@
 (add-hook 'python-mode-hook (lambda ()
                               (require 'sphinx-doc)
                               (sphinx-doc-mode t)))
+(setq python-shell-interpreter "python") ; to use ob-ipython
 (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
-
 ;;; for ipython5, See http://ipython.readthedocs.io/en/stable/whatsnew/version5.html#id1
 (setq python-shell-virtualenv-root "/opt/anaconda3/")
 ;; (setq python-shell-interpreter "ipython"
@@ -895,7 +895,10 @@ Return a list containing the level change and the previous indentation."
 
 (add-to-list 'tramp-remote-process-environment
              (format "DISPLAY=%s" (getenv "DISPLAY")))
-(require 'init-jd)
+(when (file-exists-p "init-jd.el")
+  (require 'init-jd)
+  )
+
 
 ;;; company dict
 (require 'company-dict)
@@ -906,6 +909,13 @@ Return a list containing the level change and the previous indentation."
 ;; Optional: evil-mode users may prefer binding this to C-x C-k for vim
 ;; omni-completion-like dictionary completion
 ;; (define-key evil-insert-state-map (kbd "C-x C-k") 'company-dict)
+
+;;; maven
+(add-to-list 'load-path "~/.emacs.d/site-lisp/maven-pom-mode")
+(load "maven-pom-mode")
+
 (message ">> init-local.el done")
+
+
 
 (provide 'init-local)
