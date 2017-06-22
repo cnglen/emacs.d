@@ -423,7 +423,10 @@ you define your own `sql-mode-hive-font-lock-keywords'.")
                                         "set"
                                         "create" "drop" "truncate"
                                         "use" "describe" "show" "limit" "sort" "partitioned" "comment" ; added by gang
-                                        ) t) "\\(\\b\\|\\s-\\)\\)\\|\\(^```$\\)"))
+                                        "row format"
+                                        "stored as" "load data"
+                                        "--"
+                                        ) t) "\\(\\s-\\)\\)\\|\\(--*\\)\\|\\(^```$\\)"))
 
 (defun sql-indent-level-delta (&optional prev-start prev-indent)
   "Calculate the change in level from the previous non-blank line.
