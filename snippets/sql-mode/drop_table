@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# Drop table
+# name: drop_table
+# key: dt
+# type: snippet
+# group : user define
+# --
+DROP TABLE IF EXISTS ${db}.${table};

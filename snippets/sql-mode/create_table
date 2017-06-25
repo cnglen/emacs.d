@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# create  table
+# name: create_table
+# key: ct
+# type: snippet
+# group : user define
+# --
+CREATE TABLE IF NOT EXISTS ${db}.${table} (
+
+)
+COMMENT '${description}'
+;

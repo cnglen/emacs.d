@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# column type comment
+# name: column_type_comment
+# key: col
+# type: snippet
+# group : user define
+# --
+${column} ${type} COMMENT '${COMMENT}',
