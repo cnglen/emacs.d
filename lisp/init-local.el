@@ -788,6 +788,7 @@ Return a list containing the level change and the previous indentation."
 (use-package flycheck-cask
   :commands flycheck-cask-setup
   :config (add-hook 'emacs-lisp-mode-hook (flycheck-cask-setup)))
+(require 'flycheck-scala-sbt)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; common
@@ -906,6 +907,7 @@ Return a list containing the level change and the previous indentation."
 
 
 ;;; company dict
+(require-package 'company-dict)
 (require 'company-dict)
 ;; Where to look for dictionary files. Default is ~/.emacs.d/dict
 (setq company-dict-dir (concat user-emacs-directory "dict/"))
