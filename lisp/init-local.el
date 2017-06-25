@@ -58,8 +58,9 @@
 (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
 ;;; for ipython5, See http://ipython.readthedocs.io/en/stable/whatsnew/version5.html#id1
 (setq python-shell-virtualenv-root "/opt/anaconda3/")
-(setq python-shell-interpreter "ipython"
-      python-shell-interpreter-args "--simple-prompt -i")
+(setq python-shell-interpreter "python3")
+;; (setq python-shell-interpreter "ipython"
+;;       python-shell-interpreter-args "--simple-prompt -i")
 (message ">>   python done ...")
 
 
@@ -877,7 +878,7 @@ Return a list containing the level change and the previous indentation."
                nil))
 (add-hook 'nxml-mode-hook 'hs-minor-mode)
 ;; optional key bindings, easier than hs defaults
-(define-key nxml-mode-map (kbd "C-c h") 'hs-toggle-hiding)
+(define-key nxml-mode-map (kbd "M-<left>") 'hs-toggle-hiding)
 
 
 ;;; ipython notebook
