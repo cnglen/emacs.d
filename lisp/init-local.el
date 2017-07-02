@@ -885,16 +885,6 @@ Return a list containing the level change and the previous indentation."
 ;; optional key bindings, easier than hs defaults
 (define-key nxml-mode-map (kbd "M-<left>") 'hs-toggle-hiding)
 
-
-;;; ipython notebook
-(require-package 'ein)
-(require 'ein)
-;; (require-package 'smartrep)
-;; (setq ein:use-auto-complete t)
-;; ;; Or, to enable "superpack" (a little bit hacky improvements):
-;; ;; (setq ein:use-auto-complete-superpack t)
-;; (setq ein:use-smartrep t)
-
 ;;; jd
 ;; (setq tramp-verbose 100)
 ;;;
