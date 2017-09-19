@@ -60,8 +60,8 @@
 (setq python-shell-virtualenv-root "/opt/anaconda3/")
 (setq python-shell-interpreter "python3")
 
-;; (setq python-shell-interpreter "ipython"
-;;       python-shell-interpreter-args "--simple-prompt -i")
+(setq python-shell-interpreter "ipython"
+      python-shell-interpreter-args "--simple-prompt -i")
 (message ">>   python done ...")
 
 

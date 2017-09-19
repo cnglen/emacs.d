@@ -10,9 +10,11 @@
 
 (when (maybe-require-package 'intero)
   (after-load 'haskell-mode
-    (add-hook 'haskell-mode-hook 'intero-mode)
-    )
+    (intero-global-mode)
+    (add-hook 'haskell-mode-hook 'eldoc-mode))
   (after-load 'intero
+    ;; Don't clobber sanityinc/counsel-search-project binding
+    (define-key intero-mode-map (kbd "M-?") nil)
     (after-load 'flycheck
       (flycheck-add-next-checker 'intero
                                  '(warning . haskell-hlint)))))

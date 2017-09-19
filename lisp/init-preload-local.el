@@ -4,7 +4,6 @@
                          ("melpa-stable" . "http://stable.melpa.org/packages/")
 			 ))
 
-
 (package-initialize) ;; You might already have this line
 
 ;; (add-to-list 'package-archives
