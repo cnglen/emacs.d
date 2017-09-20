@@ -17,7 +17,8 @@
     (message "Default package locations have changed in this config: renaming old package dir %s to %s."
              package-user-dir
              versioned-package-dir)
-    (rename-file package-user-dir versioned-package-dir))
+    ;(rename-file package-user-dir versioned-package-dir)
+    )
   (setq package-user-dir versioned-package-dir))
 
 
@@ -39,10 +40,10 @@
                                 (not (gnutls-available-p))))
 
 ;;; Also use Melpa for most packages
-(add-to-list 'package-archives
-             `("melpa" . ,(if sanityinc/no-ssl
-                              "http://melpa.org/packages/"
-                            "https://melpa.org/packages/")))
+;(add-to-list 'package-archives
+;             `("melpa" . ,(if sanityinc/no-ssl
+;                              "http://melpa.org/packages/"
+;                            "https://melpa.org/packages/")))
 
 (unless sanityinc/no-ssl
   ;; Force SSL for GNU ELPA

@@ -781,14 +781,15 @@ Return a list containing the level change and the previous indentation."
 (setq ensime-startup-snapshot-notification nil)
 (require-package 'scala-mode)
 (require-package 'ensime)
-(use-package ensime
-  :ensure t
-  :pin melpa-stable)
+(require-package 'use-package)
+;; (use-package ensime
+;;   :ensure t
+;;   :pin melpa-stable)
 
-(use-package flycheck-cask
-  :commands flycheck-cask-setup
-  :config (add-hook 'emacs-lisp-mode-hook (flycheck-cask-setup)))
-(require 'flycheck-scala-sbt)
+;; (use-package flycheck-cask
+;;   :commands flycheck-cask-setup
+;;   :config (add-hook 'emacs-lisp-mode-hook (flycheck-cask-setup)))
+;; (require 'flycheck-scala-sbt)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; common

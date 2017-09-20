@@ -18,6 +18,13 @@
 (setq debug-on-error nil)
 (message ">> init.el start ...")
 
+(setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                         ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+                         ("org"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+                         ("melpa-stable"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/")
+                         ))
+
+
 ;;; option 1
 ;; (setq package-archives
 ;;       '(
@@ -110,7 +117,7 @@
 (require 'init-projectile)
 
 (require 'init-compile)
-;;(require 'init-crontab)
+;(require 'init-crontab)
 (require 'init-textile)
 (require 'init-markdown)
 (require 'init-csv)
