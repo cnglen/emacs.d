@@ -58,8 +58,8 @@
 (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
 ;;; for ipython5, See http://ipython.readthedocs.io/en/stable/whatsnew/version5.html#id1
 (setq python-shell-virtualenv-root "/opt/anaconda3/")
-;; (setq python-shell-interpreter "ipython"
-;;       python-shell-interpreter-args "--simple-prompt -i")
+(setq python-shell-interpreter "ipython"
+      python-shell-interpreter-args "--simple-prompt -i")
 (message ">>   python done ...")
 
 
@@ -149,6 +149,8 @@ unwanted space when exporting org-mode to html."
 (require 'ob-ipython)
 (setq org-confirm-babel-evaluate nil) ; don't prompt me to confirm everytime I want to evaluate a block
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append) ; display/update images in the buffer after I evaluate
+(add-to-list 'org-latex-minted-langs '(ipython "python"))
+
 ;;; <-------------------------------------- NOTE
 ;;; ob-ipython.el: in ob-ipython--launch-driver, change the order (or "python" python-shell-interpreter))
 ;;; or manual set up
@@ -426,7 +428,7 @@ you define your own `sql-mode-hive-font-lock-keywords'.")
                                         "row format"
                                         "stored as" "load data"
                                         "--"
-                                        ) t) "\\(\\s-\\)\\)\\|\\(--*\\)\\|\\(^```$\\)"))
+                                        ) t) "\\(\\s-\\)\\)\\|\\(--*\\)\\|\\(;\\)\\|\\(^```$\\)"))
 
 (defun sql-indent-level-delta (&optional prev-start prev-indent)
   "Calculate the change in level from the previous non-blank line.
