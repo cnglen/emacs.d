@@ -781,13 +781,15 @@ Return a list containing the level change and the previous indentation."
 (setq ensime-startup-snapshot-notification nil)
 (require-package 'scala-mode)
 (require-package 'ensime)
-(use-package ensime
-  :ensure t
-  :pin melpa-stable)
+(require-package 'use-package)
+;; (use-package ensime
+;;   :ensure t
+;;   :pin melpa-stable)
 
-(use-package flycheck-cask
-  :commands flycheck-cask-setup
-  :config (add-hook 'emacs-lisp-mode-hook (flycheck-cask-setup)))
+;; (use-package flycheck-cask
+;;   :commands flycheck-cask-setup
+;;   :config (add-hook 'emacs-lisp-mode-hook (flycheck-cask-setup)))
+;; (require 'flycheck-scala-sbt)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; common
@@ -882,17 +884,7 @@ Return a list containing the level change and the previous indentation."
                nil))
 (add-hook 'nxml-mode-hook 'hs-minor-mode)
 ;; optional key bindings, easier than hs defaults
-(define-key nxml-mode-map (kbd "C-c h") 'hs-toggle-hiding)
-
-
-;;; ipython notebook
-(require-package 'ein)
-(require 'ein)
-;; (require-package 'smartrep)
-;; (setq ein:use-auto-complete t)
-;; ;; Or, to enable "superpack" (a little bit hacky improvements):
-;; ;; (setq ein:use-auto-complete-superpack t)
-;; (setq ein:use-smartrep t)
+(define-key nxml-mode-map (kbd "M-<left>") 'hs-toggle-hiding)
 
 ;;; jd
 ;; (setq tramp-verbose 100)
@@ -906,6 +898,7 @@ Return a list containing the level change and the previous indentation."
 
 
 ;;; company dict
+(require-package 'company-dict)
 (require 'company-dict)
 ;; Where to look for dictionary files. Default is ~/.emacs.d/dict
 (setq company-dict-dir (concat user-emacs-directory "dict/"))
