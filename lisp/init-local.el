@@ -21,8 +21,6 @@
 ;;         ("melpa-cn" . "http://elpa.codefalling.com/melpa/")))
 
 ;;; install packages
-(require-package 'ob-ipython)
-(require-package 'elpy)
 (require-package 'yasnippet)
 (require-package 'anaconda-mode)
 (require-package 'org)
@@ -53,13 +51,12 @@
 (add-hook 'python-mode-hook (lambda ()
                               (require 'sphinx-doc)
                               (sphinx-doc-mode t)))
-(setq python-shell-interpreter "python") ; to use ob-ipython
+;;(setq python-shell-interpreter "python") ; to use ob-ipython
 (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
 ;;; for ipython5, See http://ipython.readthedocs.io/en/stable/whatsnew/version5.html#id1
 (setq python-shell-virtualenv-root "/opt/anaconda3/")
-(setq python-shell-interpreter "python3")
-
+;; (setq python-shell-interpreter "python3")
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args "--simple-prompt -i")
 (message ">>   python done ...")
@@ -148,16 +145,25 @@ unwanted space when exporting org-mode to html."
 ;;   (setq ad-return-value (sacha/org-html-checkbox (ad-get-arg 0))))
 
 ;;; ipython in org-mode
+(require-package 'ob-ipython)
 (require 'ob-ipython)
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((ipython . t)
+   ;; other languages..
+   ))
 (setq org-confirm-babel-evaluate nil) ; don't prompt me to confirm everytime I want to evaluate a block
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append) ; display/update images in the buffer after I evaluate
-;;; <-------------------------------------- NOTE
-;;; ob-ipython.el: in ob-ipython--launch-driver, change the order (or "python" python-shell-interpreter))
-;;; or manual set up
+(add-to-list 'org-latex-minted-langs '(ipython "python"))
+(setq python-shell-interpreter "ipython")
+
+;; <-------------------------------------- NOTE
+;; ob-ipython.el: in ob-ipython--launch-driver, change the order (or "python" python-shell-interpreter))
+;; or manual set up
+;; (require-package 'elpy)
 ;; (elpy-enable)
-;; (setq python-shell-interpreter "python") ; to use ob-ipython
-;; ;; (elpy-use-ipython)                        ; disabled to use ob-ipython
-;; ;; (setq python-shell-interpreter "ipython") ; disabled to use ob-ipython
+;; (elpy-use-ipython)                        ; disabled to use ob-ipython
+
 
 ;;; yasnippet
 (require 'yasnippet)
@@ -199,9 +205,9 @@ unwanted space when exporting org-mode to html."
 (setq plantuml-jar-path "~/.emacs.d/lib/plantuml/plantuml.jar")
 (setq org-plantuml-jar-path "~/.emacs.d/lib/plantuml/plantuml.jar")
 (org-babel-do-load-languages
- 'org-babel-load-languages
- '(;; other Babel languages
-   (plantuml . t)))
+'org-babel-load-languages
+'(;; other Babel languages
+  (plantuml . t)))
 
 ;;; dot
 (require-package 'graphviz-dot-mode)
@@ -502,7 +508,7 @@ Return a list containing the level change and the previous indentation."
 ;;; Hide Menu/tool/scroll bar
 (menu-bar-mode 1)
 (tool-bar-mode 0)
-(scroll-bar-mode 0)
+                                        ;(scroll-bar-mode 0)
 
 ;;; Display time
 (setq column-number-mode t
