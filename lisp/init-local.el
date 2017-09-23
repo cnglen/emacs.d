@@ -56,7 +56,10 @@
 (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
 ;;; for ipython5, See http://ipython.readthedocs.io/en/stable/whatsnew/version5.html#id1
 (setq python-shell-virtualenv-root "/opt/anaconda3/")
+<<<<<<< HEAD
 ;; (setq python-shell-interpreter "python3")
+=======
+>>>>>>> 634799dd8e4848ba28c7f16dc6adedbf130af9c7
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args "--simple-prompt -i")
 (message ">>   python done ...")
@@ -157,13 +160,6 @@ unwanted space when exporting org-mode to html."
 (add-to-list 'org-latex-minted-langs '(ipython "python"))
 (setq python-shell-interpreter "ipython")
 
-;; <-------------------------------------- NOTE
-;; ob-ipython.el: in ob-ipython--launch-driver, change the order (or "python" python-shell-interpreter))
-;; or manual set up
-;; (require-package 'elpy)
-;; (elpy-enable)
-;; (elpy-use-ipython)                        ; disabled to use ob-ipython
-
 
 ;;; yasnippet
 (require 'yasnippet)
@@ -205,9 +201,9 @@ unwanted space when exporting org-mode to html."
 (setq plantuml-jar-path "~/.emacs.d/lib/plantuml/plantuml.jar")
 (setq org-plantuml-jar-path "~/.emacs.d/lib/plantuml/plantuml.jar")
 (org-babel-do-load-languages
-'org-babel-load-languages
-'(;; other Babel languages
-  (plantuml . t)))
+ 'org-babel-load-languages
+ '(;; other Babel languages
+   (plantuml . t)))
 
 ;;; dot
 (require-package 'graphviz-dot-mode)
@@ -434,7 +430,7 @@ you define your own `sql-mode-hive-font-lock-keywords'.")
                                         "row format"
                                         "stored as" "load data"
                                         "--"
-                                        ) t) "\\(\\s-\\)\\)\\|\\(--*\\)\\|\\(^```$\\)"))
+                                        ) t) "\\(\\s-\\)\\)\\|\\(--*\\)\\|\\(;\\)\\|\\(^```$\\)"))
 
 (defun sql-indent-level-delta (&optional prev-start prev-indent)
   "Calculate the change in level from the previous non-blank line.
