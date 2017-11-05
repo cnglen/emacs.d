@@ -751,11 +751,11 @@ Return a list containing the level change and the previous indentation."
 (setq help-at-pt-timer-delay 0.1)
 (help-at-pt-set-timer)
 
-;;; too slow
-;; (require 'auto-complete-config)
-;; (ac-config-default)
-;; (require 'ac-emacs-eclim)
-;; (ac-emacs-eclim-config)
+;;; too slow, depends on the PC configuration
+(require 'auto-complete-config)
+(ac-config-default)
+(require 'ac-emacs-eclim)
+(ac-emacs-eclim-config)
 
 (require 'company)
 (require 'company-emacs-eclim)
@@ -764,8 +764,12 @@ Return a list containing the level change and the previous indentation."
 
 (require-package 'use-package)
 (use-package eclim-mode
-  :bind (("M-?" . eclim-java-show-documentation-for-current-element)
-         ))
+  :bind (("M-?" . eclim-java-show-documentation-for-current-element))
+  )
+;;; FIXME
+;;; M-. -> eclim-java-find-type
+
+
 
 
 ;;; How to install google-java-format
@@ -779,6 +783,10 @@ Return a list containing the level change and the previous indentation."
   (interactive)
   (add-hook 'before-save-hook 'google-java-format-buffer nil t))
 (add-hook 'java-mode-hook 'google-java-format-enable-on-save)
+
+;;; FIXME: java indent 2 to compatile with google-java-format
+(add-hook 'java-mode-hook (lambda () (setq c-basic-offset 2)))
+
 
 ;; ;;; todo
 ;; (require-package 'hydra)
