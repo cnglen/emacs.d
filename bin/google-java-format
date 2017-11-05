@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+java -jar ~/.emacs.d/lib/google-java-format/google-java-format-1.6-SNAPSHOT-all-deps.jar $@
