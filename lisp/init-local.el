@@ -55,7 +55,6 @@
 (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
 ;;; for ipython5, See http://ipython.readthedocs.io/en/stable/whatsnew/version5.html#id1
-(setq python-shell-virtualenv-root "/opt/anaconda3/")
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args "--simple-prompt -i")
 (message ">>   python done ...")
@@ -723,46 +722,63 @@ Return a list containing the level change and the previous indentation."
 ;; ;; (define-key eclim-mode-map (kbd "C-c C-e t")   'eclim-run-junit)
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; (require-package 'eclim)
-;; (require-package 'auto-complete)
-;; (require-package 'ac-emacs-eclim)
-;; (require-package 'company-emacs-eclim)
-;; (require 'eclim)
-;; (require 'eclimd)
-;; (add-hook 'java-mode-hook 'eclim-mode)
-;; (custom-set-variables
-;;  '(eclim-eclipse-dirs '("/opt/eclipse/jee-neon/eclipse"))
-;;  '(eclim-executable "/opt/eclipse/jee-neon/eclipse/eclim"))
-;; (setq eclimd-executable  "/opt/eclipse/jee-neon/eclipse/eclimd")
-;; (setq eclimd-default-workspace "~/.eclipse_workspace")
-;; (setq eclimd-wait-for-process nil)
-;; (setq eclim-accepted-file-regexps  '("\\.java$")) ; use eclim only for java
-;; (setq help-at-pt-display-when-idle t)
-;; (setq help-at-pt-timer-delay 0.1)
-;; (help-at-pt-set-timer)
+(require-package 'eclim)
+(require-package 'auto-complete)
+(require-package 'ac-emacs-eclim)
+(require-package 'company-emacs-eclim)
+(require 'eclim)
+(require 'eclimd)
+
+
+(setq eclimd-autostart t)
+(defun my-java-mode-hook ()
+  (eclim-mode t))
+(add-hook 'java-mode-hook 'my-java-mode-hook)
+
+;;; Eclipse related
+;;; - Get eclipse from http://mirrors.ustc.edu.cn/eclipse/eclipse/downloads/
+;;; - Install into /opt/eclipse/version
+;;; - Install emacs-eclim, see https://github.com/emacs-eclim/emacs-eclim
+(custom-set-variables
+ '(eclim-eclipse-dirs '("/opt/eclipse/oxygen/eclipse"))
+ '(eclim-executable "/opt/eclipse/oxygen/eclim"))
+(setq eclimd-executable  "/opt/eclipse/oxygen/eclimd")
+(setq eclimd-default-workspace "~/.eclipse_workspace")
+(setq eclimd-wait-for-process nil)
+(setq eclim-accepted-file-regexps  '("\\.java$")) ; use eclim only for java
+
+(setq help-at-pt-display-when-idle t)
+(setq help-at-pt-timer-delay 0.1)
+(help-at-pt-set-timer)
+
+;;; too slow
 ;; (require 'auto-complete-config)
 ;; (ac-config-default)
 ;; (require 'ac-emacs-eclim)
 ;; (ac-emacs-eclim-config)
-;; (require 'company)
-;; (require 'company-emacs-eclim)
-;; (company-emacs-eclim-setup)
-;; (global-company-mode t)
 
-;; (require-package 'use-package)
-;; (use-package eclim-mode
-;;   :bind (("M-?" . eclim-java-show-documentation-for-current-element)
-;;          ))
+(require 'company)
+(require 'company-emacs-eclim)
+(company-emacs-eclim-setup)
+(global-company-mode t)
+
+(require-package 'use-package)
+(use-package eclim-mode
+  :bind (("M-?" . eclim-java-show-documentation-for-current-element)
+         ))
 
 
-;; (require 'google-java-format)
-;; (setq google-java-format-executable "~/.emacs.d/lib/google-java-format/google-java-format-1.1-all-deps.jar")
-;; ;; (define-key java-mode-map (kbd "C-M-\\") 'google-java-format-region)
-;; ;; (defun google-java-format-enable-on-save ()
-;; ;;   "Pre-save hook to be used before running autopep8."
-;; ;;   (interactive)
-;; ;;   (add-hook 'before-save-hook 'google-java-format-buffer nil t))
-;; ;; (add-hook 'java-mode-hook 'google-java-format-enable-on-save)
+;;; How to install google-java-format
+;;; - git clone https://github.com/google/google-java-format.git;
+;;; - mvn package; copy google-java-format-*-SNAPSHOT-all-deps.jar ~/.emacs.d/lib/google-java-format
+(require 'google-java-format)
+(setq google-java-format-executable "~/.emacs.d/bin/google-java-format")
+;;(define-key java-mode-map (kbd "C-M-\\") 'google-java-format-region)
+(defun google-java-format-enable-on-save ()
+  "Pre-save hook to be used before running autopep8."
+  (interactive)
+  (add-hook 'before-save-hook 'google-java-format-buffer nil t))
+(add-hook 'java-mode-hook 'google-java-format-enable-on-save)
 
 ;; ;;; todo
 ;; (require-package 'hydra)
