@@ -56,10 +56,6 @@
 (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
 ;;; for ipython5, See http://ipython.readthedocs.io/en/stable/whatsnew/version5.html#id1
 (setq python-shell-virtualenv-root "/opt/anaconda3/")
-<<<<<<< HEAD
-;; (setq python-shell-interpreter "python3")
-=======
->>>>>>> 634799dd8e4848ba28c7f16dc6adedbf130af9c7
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args "--simple-prompt -i")
 (message ">>   python done ...")
