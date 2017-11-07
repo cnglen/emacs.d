@@ -739,6 +739,8 @@ Return a list containing the level change and the previous indentation."
 ;;; - Get eclipse from http://mirrors.ustc.edu.cn/eclipse/eclipse/downloads/
 ;;; - Install into /opt/eclipse/version
 ;;; - Install emacs-eclim, see https://github.com/emacs-eclim/emacs-eclim
+;;; - Eclpse -> Windows -> Preference -> Java -> buldpath -> Classpath variabele: new and add M2_REPO
+;;; - mvn eclipse:eclipse -DdownloadSources -DdownloadJavadocs
 (custom-set-variables
  '(eclim-eclipse-dirs '("/opt/eclipse/oxygen/eclipse"))
  '(eclim-executable "/opt/eclipse/oxygen/eclim"))
