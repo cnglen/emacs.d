@@ -28,6 +28,12 @@
 (require-package 'rspec-mode)
 
 
+(define-derived-mode brewfile-mode ruby-mode "Brewfile"
+  "A major mode for Brewfiles, used by homebrew-bundle on MacOS.")
+
+(add-auto-mode 'brewfile-mode "Brewfile\\'")
+
+
 ;;; Inferior ruby
 (require-package 'inf-ruby)
 
@@ -67,6 +73,12 @@
 
 
 (require-package 'bundler)
+
+
+(when (maybe-require-package 'yard-mode)
+  (add-hook 'ruby-mode-hook 'yard-mode)
+  (after-load 'yard-mode
+    (diminish 'yard-mode)))
 
 
 ;;; ERB
