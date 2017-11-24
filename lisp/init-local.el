@@ -754,10 +754,10 @@ Return a list containing the level change and the previous indentation."
 (help-at-pt-set-timer)
 
 ;;; too slow, depends on the PC configuration
-(require 'auto-complete-config)
-(ac-config-default)
-(require 'ac-emacs-eclim)
-(ac-emacs-eclim-config)
+;; (require 'auto-complete-config)
+;; (ac-config-default)
+;; (require 'ac-emacs-eclim)
+;; (ac-emacs-eclim-config)
 
 (require 'company)
 (require 'company-emacs-eclim)

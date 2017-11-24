@@ -13,8 +13,7 @@
 (let ((versioned-package-dir
        (expand-file-name (format "elpa-%s.%s" emacs-major-version emacs-minor-version)
                          user-emacs-directory)))
-    )
-  (setq package-user-dir versioned-package-dir))
+(setq package-user-dir versioned-package-dir))
 
 
 ;; ;; We include the org repository for completeness, but don't normally
