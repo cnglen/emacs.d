@@ -54,6 +54,7 @@
 ;;(setq python-shell-interpreter "python") ; to use ob-ipython
 (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
+(add-hook 'python-mode-hook 'yafolding-mode)
 ;;; for ipython5, See http://ipython.readthedocs.io/en/stable/whatsnew/version5.html#id1
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args "--simple-prompt -i")
@@ -819,35 +820,43 @@ Return a list containing the level change and the previous indentation."
 ;;; common
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(require 'origami)
-(define-key origami-mode-map (kbd "M-<left>") 'origami-recursively-toggle-node)
-(define-key origami-mode-map (kbd "M-<right>") 'origami-show-only-node)
+;; (require 'origami)
+;; (define-key origami-mode-map (kbd "M-<left>") 'origami-recursively-toggle-node)
+;; (define-key origami-mode-map (kbd "M-<right>") 'origami-show-only-node)
 
-;;; disable origami for python-mode, using hs-minor mode
-;;; See https://github.com/gregsexton/origami.el/issues/55
-(setq origami-parser-alist (delete '(python-mode . origami-python-parser) origami-parser-alist))
-(add-hook 'python-mode-hook 'hs-minor-mode)
-(defun py-outline-level ()
-  (let (buffer-invisibility-spec)
-    (save-excursion
-      (skip-chars-forward "\t ")
-      (current-column))))
-(defun hide-body-recenter ()
-  (interactive)
-  (hide-body)
-  (recenter))
-(defun my-pythonFold-hook ()
-  (setq outline-regexp "[^ \t\n]\\|[ \t]*\\(def[ \t]+\\|class[ \t]+\\)")
-  (setq outline-level 'py-outline-level)
-  (outline-minor-mode t)
-  (origami-mode -1)
-  )
-(add-hook 'python-mode-hook 'my-pythonFold-hook)
-(require-package 'outline-magic)
-(eval-after-load 'outline
-  '(progn
-     (require 'outline-magic)
-     (define-key outline-minor-mode-map (kbd "M-<left>") 'outline-cycle)))
+;; ;;; disable origami for python-mode, using hs-minor mode
+;; ;;; See https://github.com/gregsexton/origami.el/issues/55
+;; (setq origami-parser-alist (delete '(python-mode . origami-python-parser) origami-parser-alist))
+;; (add-hook 'python-mode-hook 'hs-minor-mode)
+;; (defun py-outline-level ()
+;;   (let (buffer-invisibility-spec)
+;;     (save-excursion
+;;       (skip-chars-forward "\t ")
+;;       (current-column))))
+;; (defun hide-body-recenter ()
+;;   (interactive)
+;;   (hide-body)
+;;   (recenter))
+;; (defun my-pythonFold-hook ()
+;;   (setq outline-regexp "[^ \t\n]\\|[ \t]*\\(def[ \t]+\\|class[ \t]+\\)")
+;;   (setq outline-level 'py-outline-level)
+;;   (outline-minor-mode t)
+;;   (origami-mode -1)
+;;   )
+;; (add-hook 'python-mode-hook 'my-pythonFold-hook)
+;; (require-package 'outline-magic)
+;; (eval-after-load 'outline
+;;   '(progn
+;;      (require 'outline-magic)
+;;      (define-key outline-minor-mode-map (kbd "M-<left>") 'outline-cycle)))
+
+
+(require 'yafolding)
+(define-key yafolding-mode-map (kbd "<C-S-return>") nil)
+(define-key yafolding-mode-map (kbd "<C-M-return>") nil)
+(define-key yafolding-mode-map (kbd "<C-return>") nil)
+(define-key yafolding-mode-map (kbd "M-<right>") 'yafolding-toggle-all)
+(define-key yafolding-mode-map (kbd "M-<left>") 'yafolding-toggle-element)
 
 ;; ;;; C/C++
 ;; (require 'xcscope)
