@@ -54,6 +54,7 @@
 ;;(setq python-shell-interpreter "python") ; to use ob-ipython
 (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
+(add-hook 'python-mode-hook 'yafolding-mode)
 ;;; for ipython5, See http://ipython.readthedocs.io/en/stable/whatsnew/version5.html#id1
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args "--simple-prompt -i")
@@ -739,6 +740,8 @@ Return a list containing the level change and the previous indentation."
 ;;; - Get eclipse from http://mirrors.ustc.edu.cn/eclipse/eclipse/downloads/
 ;;; - Install into /opt/eclipse/version
 ;;; - Install emacs-eclim, see https://github.com/emacs-eclim/emacs-eclim
+;;; - Eclpse -> Windows -> Preference -> Java -> buldpath -> Classpath variabele: new and add M2_REPO
+;;; - mvn eclipse:eclipse -DdownloadSources -DdownloadJavadocs
 (custom-set-variables
  '(eclim-eclipse-dirs '("/opt/eclipse/oxygen/eclipse"))
  '(eclim-executable "/opt/eclipse/oxygen/eclim"))
@@ -752,10 +755,10 @@ Return a list containing the level change and the previous indentation."
 (help-at-pt-set-timer)
 
 ;;; too slow, depends on the PC configuration
-(require 'auto-complete-config)
-(ac-config-default)
-(require 'ac-emacs-eclim)
-(ac-emacs-eclim-config)
+;; (require 'auto-complete-config)
+;; (ac-config-default)
+;; (require 'ac-emacs-eclim)
+;; (ac-emacs-eclim-config)
 
 (require 'company)
 (require 'company-emacs-eclim)
@@ -830,11 +833,10 @@ Return a list containing the level change and the previous indentation."
     (save-excursion
       (skip-chars-forward "    ")
       (current-column))))
-
-;; (defun hide-body-recenter ()
-;;   (interactive)
-;;   (hide-body)
-;;   (recenter))
+(defun hide-body-recenter ()
+  (interactive)
+  (hide-body)
+  (recenter))
 (defun my-pythonFold-hook ()
   (setq outline-regexp "[^ \t\n]\\|[ \t]*\\(def[ \t]+\\|class[ \t]+\\)")
   (setq outline-level 'py-outline-level)
@@ -846,11 +848,19 @@ Return a list containing the level change and the previous indentation."
   (define-key python-mode-map [M-right] 'outline-show-subtree)
   )
 (add-hook 'python-mode-hook 'my-pythonFold-hook)
-(require-package 'outline-magic)
+(require 'outline-magic)
 (eval-after-load 'outline
   '(progn
      (require 'outline-magic)
      (define-key outline-minor-mode-map (kbd "M-<left>") 'outline-cycle)))
+
+;; (require-package 'yafolding)
+;; (require 'yafolding)
+;; (define-key yafolding-mode-map (kbd "<C-S-return>") nil)
+;; (define-key yafolding-mode-map (kbd "<C-M-return>") nil)
+;; (define-key yafolding-mode-map (kbd "<C-return>") nil)
+;; (define-key yafolding-mode-map (kbd "M-<right>") 'yafolding-toggle-all)
+;; (define-key yafolding-mode-map (kbd "M-<left>") 'yafolding-toggle-element)
 
 ;; ;;; C/C++
 ;; (require 'xcscope)
