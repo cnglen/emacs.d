@@ -945,6 +945,11 @@ Return a list containing the level change and the previous indentation."
 (add-to-list 'load-path "~/.emacs.d/site-lisp/maven-pom-mode")
 (load "maven-pom-mode")
 
+;;; dockerfile-mode
+(add-to-list 'load-path "~/.emacs.d/site-lisp/dockerfile-mode/")
+(require 'dockerfile-mode)
+(add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
+
 (message ">> init-local.el done")
 
 
