@@ -115,6 +115,7 @@ unwanted space when exporting org-mode to html."
            "\\1\\2" origin-contents)))
     (ad-set-arg 1 fixed-contents)))
 
+(add-hook 'org-mode-hook (lambda () (setq truncate-lines nil)))
 
 ;;; slide
 ;;; NOTE: using the single html for presentation; If you want to export pdf, change org-reveal-single-file to nil
