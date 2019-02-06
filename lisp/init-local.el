@@ -46,7 +46,7 @@
 (require-package 'sphinx-doc)
 (require-package 'py-autopep8)
 (require 'py-autopep8)
-(setq py-autopep8-options '("--max-line-length=120"))
+(setq py-autopep8-options '("--max-line-length=192"))
 (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
 (add-hook 'python-mode-hook (lambda ()
                               (require 'sphinx-doc)
@@ -54,6 +54,7 @@
 ;;(setq python-shell-interpreter "python") ; to use ob-ipython
 (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
+(add-hook 'python-mode-hook 'yafolding-mode)
 ;;; for ipython5, See http://ipython.readthedocs.io/en/stable/whatsnew/version5.html#id1
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args "--simple-prompt -i")
@@ -831,7 +832,7 @@ Return a list containing the level change and the previous indentation."
 (defun py-outline-level ()
   (let (buffer-invisibility-spec)
     (save-excursion
-      (skip-chars-forward "\t ")
+      (skip-chars-forward "    ")
       (current-column))))
 (defun hide-body-recenter ()
   (interactive)
@@ -842,13 +843,25 @@ Return a list containing the level change and the previous indentation."
   (setq outline-level 'py-outline-level)
   (outline-minor-mode t)
   (origami-mode -1)
+  (define-key outline-minor-mode-map [M-S-down] 'outline-move-subtree-down)
+  (define-key outline-minor-mode-map [M-S-up] 'outline-move-subtree-up)
+  (define-key python-mode-map [M-left] 'outline-cycle)
+  (define-key python-mode-map [M-right] 'outline-show-subtree)
   )
 (add-hook 'python-mode-hook 'my-pythonFold-hook)
-(require-package 'outline-magic)
+(require 'outline-magic)
 (eval-after-load 'outline
   '(progn
      (require 'outline-magic)
      (define-key outline-minor-mode-map (kbd "M-<left>") 'outline-cycle)))
+
+;; (require-package 'yafolding)
+;; (require 'yafolding)
+;; (define-key yafolding-mode-map (kbd "<C-S-return>") nil)
+;; (define-key yafolding-mode-map (kbd "<C-M-return>") nil)
+;; (define-key yafolding-mode-map (kbd "<C-return>") nil)
+;; (define-key yafolding-mode-map (kbd "M-<right>") 'yafolding-toggle-all)
+;; (define-key yafolding-mode-map (kbd "M-<left>") 'yafolding-toggle-element)
 
 ;; ;;; C/C++
 ;; (require 'xcscope)
@@ -891,7 +904,14 @@ Return a list containing the level change and the previous indentation."
 (global-set-key [C-right] 'shift-right)
 (global-set-key [C-left] 'shift-left)
 
+;;; HTML/JS/CSS
+(require-package 'skewer-mode)
+(require-package 'simple-httpd)
+(require-package 'js2-mode)
 
+(add-hook 'js2-mode-hook 'skewer-mode)
+(add-hook 'css-mode-hook 'skewer-css-mode)
+(add-hook 'html-mode-hook 'skewer-html-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Xml
@@ -936,6 +956,11 @@ Return a list containing the level change and the previous indentation."
 ;;; maven
 (add-to-list 'load-path "~/.emacs.d/site-lisp/maven-pom-mode")
 (load "maven-pom-mode")
+
+;;; dockerfile-mode
+(add-to-list 'load-path "~/.emacs.d/site-lisp/dockerfile-mode/")
+(require 'dockerfile-mode)
+(add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
 
 (message ">> init-local.el done")
 
