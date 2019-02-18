@@ -47,6 +47,7 @@ i, cite, em, var, address, dfn {
     height: 90vh;         /*max height of screen*/
 }
 
-/* .reveal img { */
-/*     min-width: 80%; */
-/* } */
+.reveal img {
+    max-width: 95%;
+    max-height: 95%;            /*400%*/
+}

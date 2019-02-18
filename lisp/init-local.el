@@ -46,7 +46,7 @@
 (require-package 'sphinx-doc)
 (require-package 'py-autopep8)
 (require 'py-autopep8)
-(setq py-autopep8-options '("--max-line-length=192"))
+(setq py-autopep8-options '("--max-line-length=1920"))
 (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
 (add-hook 'python-mode-hook (lambda ()
                               (require 'sphinx-doc)
@@ -124,7 +124,7 @@ unwanted space when exporting org-mode to html."
 (setq org-reveal-root "file:////opt/reveal.js"
       org-reveal-mathjax t              ; t or nil
       org-reveal-hlevel 1 ; The minimum level of headings that should be grouped into vertical slides.
-      org-reveal-single-file t          ; t or nil
+      org-reveal-single-file nil        ; t or nil
       org-reveal-width (frame-pixel-width) ; auto detect the width of monitor
       org-reveal-height (frame-pixel-height) ;auto detect the height of monitor
       org-reveal-margin "-1"
