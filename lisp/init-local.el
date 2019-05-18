@@ -126,13 +126,13 @@ unwanted space when exporting org-mode to html."
       org-reveal-mathjax t              ; t or nil
       org-reveal-hlevel 1 ; The minimum level of headings that should be grouped into vertical slides.
       org-reveal-single-file nil        ; t or nil
-      org-reveal-width (frame-pixel-width) ; auto detect the width of monitor
-      org-reveal-height (frame-pixel-height) ;auto detect the height of monitor
+      org-reveal-width (* (frame-pixel-width) 1.2)    ; auto detect the width of monitor
+      org-reveal-height (* (frame-pixel-height) 1.2)    ;auto detect the height of monitor
       org-reveal-margin "-1"
       org-reveal-min-scale "-1"
       org-reveal-max-scale "-1"
-      org-reveal-extra-css (concat "file:///" (getenv "HOME") "/.emacs.d/lib/local.css")
-      )
+      org-reveal-extra-css (concat "file:///" (getenv "HOME") "/.emacs.d/lib/local.css"))
+
 
 
 ;; (defunsacha/org-html-checkbox (checkbox)
@@ -742,6 +742,7 @@ Return a list containing the level change and the previous indentation."
 ;;; - Install into /opt/eclipse/version
 ;;; - Install emacs-eclim, see https://github.com/emacs-eclim/emacs-eclim
 ;;; - Eclpse -> Windows -> Preference -> Java -> buldpath -> Classpath variabele: new and add M2_REPO
+;;; - install eclim: see http://eclim.org/install.html#installer-automated
 ;;; - mvn eclipse:eclipse -DdownloadSources -DdownloadJavadocs
 (custom-set-variables
  '(eclim-eclipse-dirs '("/opt/eclipse/oxygen/eclipse"))
@@ -756,10 +757,10 @@ Return a list containing the level change and the previous indentation."
 (help-at-pt-set-timer)
 
 ;;; too slow, depends on the PC configuration
-;; (require 'auto-complete-config)
-;; (ac-config-default)
-;; (require 'ac-emacs-eclim)
-;; (ac-emacs-eclim-config)
+(require 'auto-complete-config)
+(ac-config-default)
+(require 'ac-emacs-eclim)
+(ac-emacs-eclim-config)
 
 (require 'company)
 (require 'company-emacs-eclim)
@@ -961,6 +962,9 @@ Return a list containing the level change and the previous indentation."
 (add-to-list 'load-path "~/.emacs.d/site-lisp/dockerfile-mode/")
 (require 'dockerfile-mode)
 (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
+
+(add-to-list 'load-path "~/.emacs.d/site-lisp/cypher-mode")
+(require 'cypher-mode)
 
 (message ">> init-local.el done")
 
