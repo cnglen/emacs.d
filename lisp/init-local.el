@@ -273,10 +273,14 @@ resourcereport contact_list \"\" {
 (defun my-org-inline-css-hook (exporter)
   "Insert custom inline css."
   (when (eq exporter 'html)
-    (let ((my-pre-bg (face-background 'default)))
+    (let (
+          (my-pre-bg (face-background 'default))
+          (my-pre-fg (face-foreground 'default))
+          )
       (setq org-html-head-include-default-style nil)
       (setq org-html-head
-            (format "<style type=\"text/css\">\n pre.src { background-color: %s;}</style>\n" my-pre-bg)))))
+            (format "<style type=\"text/css\">\n pre.src { background-color: %s; color: %s;}</style>\n" my-pre-bg my-pre-fg)))))
+
 (add-hook 'org-export-before-processing-hook 'my-org-inline-css-hook)
 
 ;; (require 'ob-mermaid)
