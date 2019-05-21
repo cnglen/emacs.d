@@ -268,6 +268,17 @@ resourcereport contact_list \"\" {
 
 "))
 
+
+;;; 导出到html的代码背景色，与emacs的背景色一致
+(defun my-org-inline-css-hook (exporter)
+  "Insert custom inline css."
+  (when (eq exporter 'html)
+    (let ((my-pre-bg (face-background 'default)))
+      (setq org-html-head-include-default-style nil)
+      (setq org-html-head
+            (format "<style type=\"text/css\">\n pre.src { background-color: %s;}</style>\n" my-pre-bg)))))
+(add-hook 'org-export-before-processing-hook 'my-org-inline-css-hook)
+
 ;; (require 'ob-mermaid)
 (message ">>   org started done")
 
