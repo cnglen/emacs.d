@@ -46,7 +46,10 @@
 (require-package 'sphinx-doc)
 (require-package 'py-autopep8)
 (require 'py-autopep8)
-(setq py-autopep8-options '("--max-line-length=192"))
+
+;; (setq py-autopep8-options '("--max-line-length=192"))
+(setq py-autopep8-options '("--max-line-length=1920"))
+
 (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
 (add-hook 'python-mode-hook (lambda ()
                               (require 'sphinx-doc)
@@ -116,6 +119,7 @@ unwanted space when exporting org-mode to html."
            "\\1\\2" origin-contents)))
     (ad-set-arg 1 fixed-contents)))
 
+(add-hook 'org-mode-hook (lambda () (setq truncate-lines nil)))
 
 ;;; slide
 ;;; NOTE: using the single html for presentation; If you want to export pdf, change org-reveal-single-file to nil
@@ -124,14 +128,14 @@ unwanted space when exporting org-mode to html."
 (setq org-reveal-root "file:////opt/reveal.js"
       org-reveal-mathjax t              ; t or nil
       org-reveal-hlevel 1 ; The minimum level of headings that should be grouped into vertical slides.
-      org-reveal-single-file t          ; t or nil
-      org-reveal-width (frame-pixel-width) ; auto detect the width of monitor
-      org-reveal-height (frame-pixel-height) ;auto detect the height of monitor
+      org-reveal-single-file nil        ; t or nil
+      org-reveal-width (* (frame-pixel-width) 1.2)    ; auto detect the width of monitor
+      org-reveal-height (* (frame-pixel-height) 1.2)    ;auto detect the height of monitor
       org-reveal-margin "-1"
       org-reveal-min-scale "-1"
       org-reveal-max-scale "-1"
-      org-reveal-extra-css (concat "file:///" (getenv "HOME") "/.emacs.d/lib/local.css")
-      )
+      org-reveal-extra-css (concat "file:///" (getenv "HOME") "/.emacs.d/lib/local.css"))
+
 
 
 ;; (defunsacha/org-html-checkbox (checkbox)
@@ -266,6 +270,21 @@ resourcereport contact_list \"\" {
 }
 
 "))
+
+
+;;; 导出到html的代码背景色，与emacs的背景色一致
+(defun my-org-inline-css-hook (exporter)
+  "Insert custom inline css."
+  (when (eq exporter 'html)
+    (let (
+          (my-pre-bg (face-background 'default))
+          (my-pre-fg (face-foreground 'default))
+          )
+      (setq org-html-head-include-default-style nil)
+      (setq org-html-head
+            (format "<style type=\"text/css\">\n pre.src { background-color: %s; color: %s;}</style>\n" my-pre-bg my-pre-fg)))))
+
+(add-hook 'org-export-before-processing-hook 'my-org-inline-css-hook)
 
 ;; (require 'ob-mermaid)
 (message ">>   org started done")
@@ -741,6 +760,7 @@ Return a list containing the level change and the previous indentation."
 ;;; - Install into /opt/eclipse/version
 ;;; - Install emacs-eclim, see https://github.com/emacs-eclim/emacs-eclim
 ;;; - Eclpse -> Windows -> Preference -> Java -> buldpath -> Classpath variabele: new and add M2_REPO
+;;; - install eclim: see http://eclim.org/install.html#installer-automated
 ;;; - mvn eclipse:eclipse -DdownloadSources -DdownloadJavadocs
 (custom-set-variables
  '(eclim-eclipse-dirs '("/opt/eclipse/oxygen/eclipse"))
@@ -755,10 +775,10 @@ Return a list containing the level change and the previous indentation."
 (help-at-pt-set-timer)
 
 ;;; too slow, depends on the PC configuration
-;; (require 'auto-complete-config)
-;; (ac-config-default)
-;; (require 'ac-emacs-eclim)
-;; (ac-emacs-eclim-config)
+(require 'auto-complete-config)
+(ac-config-default)
+(require 'ac-emacs-eclim)
+(ac-emacs-eclim-config)
 
 (require 'company)
 (require 'company-emacs-eclim)
@@ -955,6 +975,14 @@ Return a list containing the level change and the previous indentation."
 ;;; maven
 (add-to-list 'load-path "~/.emacs.d/site-lisp/maven-pom-mode")
 (load "maven-pom-mode")
+
+;;; dockerfile-mode
+(add-to-list 'load-path "~/.emacs.d/site-lisp/dockerfile-mode/")
+(require 'dockerfile-mode)
+(add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
+
+(add-to-list 'load-path "~/.emacs.d/site-lisp/cypher-mode")
+(require 'cypher-mode)
 
 (message ">> init-local.el done")
 
