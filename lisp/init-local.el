@@ -890,6 +890,19 @@ Return a list containing the level change and the previous indentation."
             (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
               (ggtags-mode 1))))
 
+;;; apt-get install libclang-dev
+;;; https://github.com/jeaye/stdman
+(require-package 'irony)
+(require-package 'irony-eldoc)
+(require-package 'company-irony)
+(require 'irony)
+(add-hook 'c++-mode-hook 'irony-mode)
+(add-hook 'c-mode-hook 'irony-mode)
+(add-hook 'objc-mode-hook 'irony-mode)
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+(add-hook 'irony-mode-hook 'irony-eldoc)
+(define-key irony-mode-map (kbd "M-/") 'company-irony)
+(global-set-key  [f1] (lambda () (interactive) (manual-entry (current-word))))
 
 
 ;;; todo
