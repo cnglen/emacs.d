@@ -983,7 +983,7 @@ Return a list containing the level change and the previous indentation."
 
 (add-to-list 'load-path "~/.emacs.d/site-lisp/cypher-mode")
 (require 'cypher-mode)
-
+(require-package 'yasnippet-snippets)
 (message ">> init-local.el done")
 
 
