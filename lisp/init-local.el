@@ -46,7 +46,10 @@
 (require-package 'sphinx-doc)
 (require-package 'py-autopep8)
 (require 'py-autopep8)
+
+;; (setq py-autopep8-options '("--max-line-length=192"))
 (setq py-autopep8-options '("--max-line-length=1920"))
+
 (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
 (add-hook 'python-mode-hook (lambda ()
                               (require 'sphinx-doc)
@@ -857,8 +860,8 @@ Return a list containing the level change and the previous indentation."
 (defun my-pythonFold-hook ()
   (setq outline-regexp "[^ \t\n]\\|[ \t]*\\(def[ \t]+\\|class[ \t]+\\)")
   (setq outline-level 'py-outline-level)
-  (outline-minor-mode t)
   (origami-mode -1)
+  (outline-minor-mode t)
   (define-key outline-minor-mode-map [M-S-down] 'outline-move-subtree-down)
   (define-key outline-minor-mode-map [M-S-up] 'outline-move-subtree-up)
   (define-key python-mode-map [M-left] 'outline-cycle)
