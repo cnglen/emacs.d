@@ -843,7 +843,6 @@ Return a list containing the level change and the previous indentation."
 (require 'origami)
 (define-key origami-mode-map (kbd "M-<left>") 'origami-recursively-toggle-node)
 (define-key origami-mode-map (kbd "M-<right>") 'origami-show-only-node)
-
 ;;; disable origami for python-mode, using hs-minor mode
 ;;; See https://github.com/gregsexton/origami.el/issues/55
 (setq origami-parser-alist (delete '(python-mode . origami-python-parser) origami-parser-alist))
@@ -857,8 +856,12 @@ Return a list containing the level change and the previous indentation."
   (interactive)
   (hide-body)
   (recenter))
+
+
 (defun my-pythonFold-hook ()
-  (setq outline-regexp "[^ \t\n]\\|[ \t]*\\(def[ \t]+\\|class[ \t]+\\)")
+
+  ;; 正则去匹配Heading: 空行|*def|*class|
+  (setq outline-regexp "[^ \t\n]\\|[ \t]*\\(def[ \t]+\\|class[ \t]+\\|[ \t]*@\\)") ;; OK
   (setq outline-level 'py-outline-level)
   (origami-mode -1)
   (outline-minor-mode t)
