@@ -836,34 +836,15 @@ Return a list containing the level change and the previous indentation."
 ;;   :config (add-hook 'emacs-lisp-mode-hook (flycheck-cask-setup)))
 ;; (require 'flycheck-scala-sbt)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;04011023wg
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; common
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(require 'origami)
-(define-key origami-mode-map (kbd "M-<left>") 'origami-recursively-toggle-node)
-(define-key origami-mode-map (kbd "M-<right>") 'origami-show-only-node)
-;;; disable origami for python-mode, using hs-minor mode
-;;; See https://github.com/gregsexton/origami.el/issues/55
-(setq origami-parser-alist (delete '(python-mode . origami-python-parser) origami-parser-alist))
-(add-hook 'python-mode-hook 'hs-minor-mode)
-(defun py-outline-level ()
-  (let (buffer-invisibility-spec)
-    (save-excursion
-      (skip-chars-forward "    ")
-      (current-column))))
-(defun hide-body-recenter ()
-  (interactive)
-  (hide-body)
-  (recenter))
-
-
 (defun my-pythonFold-hook ()
-
   ;; 正则去匹配Heading: 空行|*def|*class|
-  (setq outline-regexp "[^ \t\n]\\|[ \t]*\\(def[ \t]+\\|class[ \t]+\\|[ \t]*@\\)") ;; OK
-  (setq outline-level 'py-outline-level)
-  (origami-mode -1)
+  (setq outline-regexp "[^ \t\n]\\|[ \t]*\\(def[ \t]+\\|class[ \t]+\\|@\\)") ;; beginning of heading
+  (setq outline-heading-end-regexp "):\\|->.+:\\|:$") ;ending of heading
   (outline-minor-mode t)
   (define-key outline-minor-mode-map [M-S-down] 'outline-move-subtree-down)
   (define-key outline-minor-mode-map [M-S-up] 'outline-move-subtree-up)
