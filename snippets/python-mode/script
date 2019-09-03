@@ -12,7 +12,7 @@ __author__ = ""
 __email__ = ""
 __status__ = "DEV"
 
-def main():
+def main():                     # pylint: disable=missing-docstring
     pass
 
 if __name__ == '__main__':

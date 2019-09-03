@@ -1,0 +1,30 @@
+# -*- mode: snippet -*-
+# name: luogutest
+# key: luogutest
+# group : user define
+# --
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import unittest
+from unittest.mock import patch
+from p1111 import Solution
+
+
+class P1111TestCases(unittest.TestCase):
+
+    input_str = """"""
+
+    @patch('builtins.input', side_effect=input_str.split("\n"))
+    def test(self, mock_input):
+        solution = Solution.from_cmd_line()
+        solution.solve()
+        solution.print_result()
+
+
+def main():                     # pylint: disable=missing-docstring
+    pass
+
+
+if __name__ == '__main__':
+    main()
