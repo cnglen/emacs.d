@@ -96,6 +96,8 @@
 
 ;; ;; ;; "sed -E -i 's/^(\\begin\\{minted\\}.*)\\{ipython\\}$/\1\\{python\\}/g' %f"
 
+
+
 ;;; Only _{} -> subscript, in html/pdf and emacs buffer.
 (setq org-export-with-sub-superscripts '{}
       org-use-sub-superscripts '{})
@@ -282,7 +284,7 @@ resourcereport contact_list \"\" {
           )
       (setq org-html-head-include-default-style nil)
       (setq org-html-head
-            (format "<style type=\"text/css\">\n pre.src { background-color: %s; color: %s;}</style>\n" my-pre-bg my-pre-fg)))))
+            (format "<style type=\"text/css\">\n pre.src { background-color: %s; color: %s;} span.underline{text-decoration: underline} </style>\n" my-pre-bg my-pre-fg)))))
 
 (add-hook 'org-export-before-processing-hook 'my-org-inline-css-hook)
 
@@ -983,6 +985,38 @@ Return a list containing the level change and the previous indentation."
 (require-package 'yasnippet-snippets)
 (message ">> init-local.el done")
 
+;;; pdf
+(require-package 'pdf-tools)
 
+(require 'org-ref)
+(setq reftex-default-bibliography '("~/Workspace/repos/rock_data/doc/paper/arxiv_reference.bib"))
+
+;; see org-ref for use of these variables
+(setq org-ref-bibliography-notes "~/Dropbox/bibliography/notes.org"
+      org-ref-default-bibliography '("~/Workspace/repos/rock_data/doc/paper/arxiv_reference.bib")
+      org-ref-pdf-directory "~/Documents/doc/paper/arxiv/")
+
+;;; color: 高亮变量，支持Python/Scala/JavaScript/Ruby/Python/Emacs Lisp/ Clojure/ C/ C++/ Rust/ Java/ and Go
+(package-install 'color-identifiers-mode)
+(add-hook 'after-init-hook 'global-color-identifiers-mode)
+
+;;; google 翻译
+;; (setq url-gateway-method 'socks)
+;; (setq socks-server '("Default server" "127.0.0.1" 1080 5))
+(require 'google-translate)
+(require 'google-translate-smooth-ui)
+(eval-after-load 'google-translate-core
+  '(setq google-translate-base-url "https://translate.google.cn/translate_a/single"
+         google-translate-listen-url "https://translate.google.cn/translate_tts"
+         google-translate-default-target-language "zh-CN"
+         google-translate-default-source-language ""
+         ))
+
+(setq google-translate-translation-directions-alist
+      '(("en" . "zh-CN")  ("zh-CN" . "en") ))
+
+(eval-after-load 'google-translate-tk
+  '(setq google-translate--tkk-url "https://translate.google.cn/"))
+(global-set-key "\C-ct" 'google-translate-smooth-translate)
 
 (provide 'init-local)

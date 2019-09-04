@@ -12,7 +12,20 @@ __author__ = ""
 __email__ = ""
 __status__ = "DEV"
 
-def main():                     # pylint: disable=missing-docstring
+from typing import Dict, List, Tuple
+import logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="{asctime} - {name} - {levelname} - [{module}/{funcName} : {processName}({process}) : {threadName}({thread})] - {message}",
+    handlers=[
+        logging.StreamHandler()
+    ],
+    style='{'
+)
+logger = logging.getLogger(__name__)  # pylint: disable=invalid-name
+
+
+def main():
     pass
 
 if __name__ == '__main__':
