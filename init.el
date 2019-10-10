@@ -12,17 +12,19 @@
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
-(package-initialize)
-
 ;; (setq debug-on-error t)
 (setq debug-on-error nil)
 (message ">> init.el start ...")
 
-(setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+(when (and (>= libgnutls-version 30603)
+           (<= emacs-major-version 26.2) )
+  (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
+(setq package-archives '(("gnu"   . "http://mirrors.163.com/elpa/gnu/")
                          ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
                          ("org"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
                          ("melpa-stable"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/")
                          ))
+(package-initialize)
 
 
 ;;; option 1
@@ -119,13 +121,13 @@
 ;(require 'init-crontab)
 (require 'init-textile)
 (require 'init-markdown)
-(require 'init-csv)
+; (require 'init-csv)
 (require 'init-erlang)
 (require 'init-javascript)
 (require 'init-php)
 (require 'init-org)
-(require 'init-nxml)
-(require 'init-html)
+; (require 'init-nxml)
+; (require 'init-html)
 (require 'init-css)
 (require 'init-haml)
 (require 'init-http)

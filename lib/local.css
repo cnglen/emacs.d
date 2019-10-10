@@ -1,6 +1,8 @@
 .reveal p {
     text-align: left;
+
 }
+
 
 .reveal strong, .reveal b {
     font-weight: bold;
@@ -47,13 +49,46 @@ code {
 /* vw: viewpoint width, 1vw = 1% width */
 /* vh: viewpoint height, 1vh = 1% height */
 
-.reveal div.figure p {
-    height: 90vh;         /*max height of screen*/
-}
+/* .reveal div.figure p { */
+/*     height: 90vh;         /\*max height of screen*\/ */
+/* } */
 
+
+
+
+/* .slides { */
+/*     overflow: scroll !important; */
+/*     pointer-events: auto !important; */
+/* } */
+
+/* .reveal { */
+/*     overflow-y: scroll !important; */
+/*     pointer-events: auto !important; */
+/* } */
+
+/* .slides::before { */
+/*     background: none !important; */
+/* } */
+
+/* .slides::after { */
+/*     box-shadow: none !important; */
+/* } */
+
+
+       /* 图片溢出问题按css没找到好的解决方案,可能要用jss; 当前方式是html中可通过右侧滑动条解决; 右侧滚动条存在自动复位 */
+/* .reveal { */
+/*     overflow: overlay; */
+/*     /\* overflow-y: overlay; *\/ */
+/* } */
+
+/* 列表左对齐，默认inline-block, 会偏向于居中 */
+.reveal ul {
+    display: block;
+}
 .reveal img {
     max-width: 95%;
     max-height: 95%;            /*400%*/
+
 }
 
 
