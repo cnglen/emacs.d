@@ -59,6 +59,9 @@
 (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
 (add-hook 'python-mode-hook 'yafolding-mode)
+(require-package 'jupyter)
+(require 'jupyter)
+(require 'jupyter-org-client)
 (jupyter-org-define-key (kbd "M-?") #'jupyter-inspect-at-point)
 
 (setq anaconda-mode-localhost-address "localhost")
@@ -212,6 +215,10 @@ unwanted space when exporting org-mode to html."
 ;;; dot
 (require-package 'graphviz-dot-mode)
 (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
+(require 'graphviz-dot-mode)
+(define-key graphviz-dot-mode-map (kbd "M-/") 'graphviz-dot-complete-word)
+
+
 
 ;;; taskjuggler
 (require 'ox-taskjuggler)
@@ -708,6 +715,7 @@ Return a list containing the level change and the previous indentation."
 (require 'company-emacs-eclim)
 (company-emacs-eclim-setup)
 (global-company-mode t)
+(setq company-global-modes '(not graphviz-dot-mode))
 
 (require-package 'use-package)
 (use-package eclim-mode
