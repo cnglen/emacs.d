@@ -784,6 +784,7 @@ Return a list containing the level change and the previous indentation."
   (define-key python-mode-map [M-right] 'outline-show-subtree)
   )
 (add-hook 'python-mode-hook 'my-pythonFold-hook)
+(require-package 'outline-magic)
 (require 'outline-magic)
 (eval-after-load 'outline
   '(progn
