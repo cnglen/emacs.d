@@ -7,6 +7,7 @@
 ;;; Code:
 
 (message ">> init-local.el started ...")
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; ELPA
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -30,10 +31,8 @@
 (require-package 'ggtags)
 (require-package 'org-plus-contrib)
 ;; (require-package 'hive)
-
-
-
 (message ">>   ELPA done ...")
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Python
@@ -47,24 +46,27 @@
 (require-package 'py-autopep8)
 (require 'py-autopep8)
 
-;; (setq py-autopep8-options '("--max-line-length=192"))
 (setq py-autopep8-options '("--max-line-length=1920"))
-
 (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
 (add-hook 'python-mode-hook (lambda ()
                               (require 'sphinx-doc)
                               (sphinx-doc-mode t)))
-;;(setq python-shell-interpreter "python") ; to use ob-ipython
+(setq python-shell-interpreter "ipython"
+      python-shell-interpreter-args "--simple-prompt -i")
+
+
+;;; anaconda-mode
 (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
 (add-hook 'python-mode-hook 'yafolding-mode)
-;;; for ipython5, See http://ipython.readthedocs.io/en/stable/whatsnew/version5.html#id1
-(setq python-shell-interpreter "ipython"
-      python-shell-interpreter-args "--simple-prompt -i")
+(require-package 'jupyter)
+(require 'jupyter)
+(require 'jupyter-org-client)
+(jupyter-org-define-key (kbd "M-?") #'jupyter-inspect-at-point)
+
+(setq anaconda-mode-localhost-address "localhost")
+
 (message ">>   python done ...")
-
-
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; ORG-MODE
@@ -150,17 +152,20 @@ unwanted space when exporting org-mode to html."
 ;;   (setq ad-return-value (sacha/org-html-checkbox (ad-get-arg 0))))
 
 ;;; ipython in org-mode
-(require-package 'ob-ipython)
-(require 'ob-ipython)
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((ipython . t)
-   ;; other languages..
-   ))
 (setq org-confirm-babel-evaluate nil) ; don't prompt me to confirm everytime I want to evaluate a block
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append) ; display/update images in the buffer after I evaluate
+(require-package 'jupyter)
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (python . t)
+   (jupyter . t)))
+(setq org-babel-default-header-args:jupyter-python '((:async . "yes")
+                                                     (:session . "py")
+                                                     (:kernel . "python3")
+                                                     (:exports . "both")
+                                                     ))
 (add-to-list 'org-latex-minted-langs '(ipython "python"))
-(setq python-shell-interpreter "ipython")
 
 
 ;;; yasnippet
@@ -207,9 +212,6 @@ unwanted space when exporting org-mode to html."
  '(;; other Babel languages
    (plantuml . t)))
 
-;;; dot
-(require-package 'graphviz-dot-mode)
-(add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
 
 ;;; taskjuggler
 (require 'ox-taskjuggler)
@@ -291,22 +293,19 @@ resourcereport contact_list \"\" {
 ;; (require 'ob-mermaid)
 (message ">>   org started done")
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Hive
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
 (require 'sql)
 (require 'sql-indent)
 (require 'sqlup-mode)
-
 (setq auto-mode-alist
       (append '(
                 ("\\.sql$" . sql-mode)
                 ("\\.hql$" . sql-mode)
                 )
               auto-mode-alist))
-
 (defvar sql-mode-hive-font-lock-keywords
   (eval-when-compile
     (list
@@ -505,6 +504,7 @@ Return a list containing the level change and the previous indentation."
 
 
 
+
 (require 'sql-indent)
 
 ;; Update indentation rules, select, insert, delete and update keywords
@@ -663,84 +663,6 @@ Return a list containing the level change and the previous indentation."
 ;;; Auto detect the coding of file, such as gb2312
 (require 'unicad)
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; R
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(require-package 'ess)
-;; (require-package 'ess-R-data-view)
-;; (require-package 'ess-R-object-popup)
-;; (require-package 'polymode)
-;; (require-package 'hideshow-org)
-;; (require-package 'ess-smart-underscore)
-
-;; (require 'ess-site)
-;; (require 'poly-R)
-;; (require 'poly-markdown)
-;; (add-to-list 'auto-mode-alist '("\\.Rmd" . poly-markdown+r-mode))
-;; (defun ess-rmarkdown ()
-;;   "Compile R markdown (.Rmd).  Should work for any output type."
-;;   ;; Compile rmarkdown to HTML or PDF with M-n s
-;;   ;; Use YAML in Rmd doc to specify the usual options which can be seen at http://rmarkdown.rstudio.com/
-;;   ;; Thanks http://roughtheory.com/posts/ess-rmarkdown.html
-;;   (interactive)
-;;   (condition-case nil                   ; Check if attached R-session
-;;       (ess-get-process)
-;;     (error
-;;      (ess-switch-process)))
-;;   (let* ((rmd-buf (current-buffer)))
-;;     (save-excursion
-;;       (let* ((sprocess (ess-get-process ess-current-process-name))
-;;              (sbuffer (process-buffer sprocess))
-;;              (buf-coding (symbol-name buffer-file-coding-system))
-;;              (R-cmd
-;;               (format "library(rmarkdown); rmarkdown::render(\"%s\")"
-;;                       buffer-file-name)))
-;;         (message "Running rmarkdown on %s" buffer-file-name)
-;;         (ess-execute R-cmd 'buffer nil nil)
-;;         (switch-to-buffer rmd-buf)
-;;         (ess-show-buffer (buffer-name sbuffer) nil)))))
-;; (define-key polymode-mode-map "\M-ns" 'ess-rmarkdown)
-
-;; ;;; <- and _
-;; (ess-toggle-S-assign nil)
-;; (ess-toggle-S-assign nil)
-;; (ess-toggle-underscore nil)
-
-;; ;;; Write table in Rmd using org
-;; (require 'org-table)
-;; (defun cleanup-org-tables ()
-;;   (save-excursion
-;;     (goto-char (point-min))
-;;     (while (search-forward "-+-" nil t) (replace-match "-|-"))
-;;     ))
-;; (add-hook 'markdown-mode-hook 'orgtbl-mode)
-;; (add-hook 'markdown-mode-hook
-;;           (lambda()
-;;             (add-hook 'after-save-hook 'cleanup-org-tables  nil 'make-it-local)))
-
-
-;; ;;; Code folding for ESS
-;; ;;; 1) Using hs-minor-mode, based on {}, (), [] using org shortcut keys
-;; (require 'hideshow-org)
-;; (add-hook 'ess-mode-hook 'hs-minor-mode)
-;; (add-hook 'ess-mode-hook 'hs-org/minor-mode)
-;; ;;; 2) Using org-mode based on {### * H1, ### ** H2, ### *** H3}
-;; (add-hook 'ess-mode-hook 'turn-on-orgstruct)
-;; (setq orgstruct-heading-prefix-regexp "^### ")
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Ctrip
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (defun connect-remote ()
-;;   (interactive)
-;;   (dired "/user@ip_or_server#port:/home/username"))
-
-;;; TBD
-;; (setq cscope-do-not-update-database t)
-;;; pandoc-mode
-
-
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;;; Java
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -806,6 +728,7 @@ Return a list containing the level change and the previous indentation."
 (require 'company-emacs-eclim)
 (company-emacs-eclim-setup)
 (global-company-mode t)
+(setq company-global-modes '(not graphviz-dot-mode))
 
 (require-package 'use-package)
 (use-package eclim-mode
@@ -858,7 +781,7 @@ Return a list containing the level change and the previous indentation."
 ;;   :config (add-hook 'emacs-lisp-mode-hook (flycheck-cask-setup)))
 ;; (require 'flycheck-scala-sbt)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;04011023wg
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; common
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -874,6 +797,7 @@ Return a list containing the level change and the previous indentation."
   (define-key python-mode-map [M-right] 'outline-show-subtree)
   )
 (add-hook 'python-mode-hook 'my-pythonFold-hook)
+(require-package 'outline-magic)
 (require 'outline-magic)
 (eval-after-load 'outline
   '(progn
@@ -888,9 +812,6 @@ Return a list containing the level change and the previous indentation."
 ;; (define-key yafolding-mode-map (kbd "M-<right>") 'yafolding-toggle-all)
 ;; (define-key yafolding-mode-map (kbd "M-<left>") 'yafolding-toggle-element)
 
-;; ;;; C/C++
-;; (require 'xcscope)
-;; (cscope-setup)
 
 ;;; global
 (require 'ggtags)
@@ -913,8 +834,6 @@ Return a list containing the level change and the previous indentation."
 (define-key irony-mode-map (kbd "M-/") 'company-irony)
 (global-set-key  [f1] (lambda () (interactive) (manual-entry (current-word))))
 
-
-;;; todo
 
 ;; Shift the selected region right if distance is postive, left if negative
 (defun shift-region (distance)
@@ -946,7 +865,6 @@ Return a list containing the level change and the previous indentation."
 (require-package 'skewer-mode)
 (require-package 'simple-httpd)
 (require-package 'js2-mode)
-
 (add-hook 'js2-mode-hook 'skewer-mode)
 (add-hook 'css-mode-hook 'skewer-css-mode)
 (add-hook 'html-mode-hook 'skewer-html-mode)
@@ -968,17 +886,6 @@ Return a list containing the level change and the previous indentation."
 (add-hook 'nxml-mode-hook 'hs-minor-mode)
 ;; optional key bindings, easier than hs defaults
 (define-key nxml-mode-map (kbd "M-<left>") 'hs-toggle-hiding)
-
-;;; jd
-;; (setq tramp-verbose 100)
-;;;
-
-(add-to-list 'tramp-remote-process-environment
-             (format "DISPLAY=%s" (getenv "DISPLAY")))
-(when (file-exists-p "init-jd.el")
-  (require 'init-jd)
-  )
-
 
 ;;; company dict
 (require-package 'company-dict)
@@ -1005,11 +912,9 @@ Return a list containing the level change and the previous indentation."
 (require-package 'yasnippet-snippets)
 (message ">> init-local.el done")
 
-;;; pdf
-(require-package 'pdf-tools)
 
-(require 'org-ref)
-(setq reftex-default-bibliography '("~/Workspace/repos/rock_data/doc/paper/arxiv_reference.bib"))
+(require-package 'org-ref)
+;; (setq reftex-default-bibliography '("~/Workspace/repos/rock_data/doc/paper/arxiv_reference.bib"))
 
 ;; see org-ref for use of these variables
 (setq org-ref-bibliography-notes "~/Dropbox/bibliography/notes.org"
@@ -1020,9 +925,15 @@ Return a list containing the level change and the previous indentation."
 (package-install 'color-identifiers-mode)
 (add-hook 'after-init-hook 'global-color-identifiers-mode)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; doc
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;; pdf
+(require-package 'pdf-tools)
+
 ;;; google 翻译
-;; (setq url-gateway-method 'socks)
-;; (setq socks-server '("Default server" "127.0.0.1" 1080 5))
+(require-package 'google-translate)
 (require 'google-translate)
 (require 'google-translate-smooth-ui)
 (eval-after-load 'google-translate-core
@@ -1031,13 +942,13 @@ Return a list containing the level change and the previous indentation."
          google-translate-default-target-language "zh-CN"
          google-translate-default-source-language ""
          ))
-
 (setq google-translate-translation-directions-alist
       '(("en" . "zh-CN")  ("zh-CN" . "en") ))
-
+(setq google-translate-backend-method 'curl)
 (eval-after-load 'google-translate-tk
   '(setq google-translate--tkk-url "https://translate.google.cn/"))
 (global-set-key "\C-ct" 'google-translate-smooth-translate)
+
 
 ;;; 自顶向下编程: 先框架，再细节
 (require-package 'elpygen)
@@ -1045,9 +956,20 @@ Return a list containing the level change and the previous indentation."
 (define-key python-mode-map (kbd "C-c i") 'elpygen-implement)
 
 ;;; dot
-;; (require-package 'graphviz-dot-mode)
-;; (require 'graphviz-dot-mode)
-;; (define-key graphviz-dot-mode-map (kbd "M-/") 'graphviz-dot-complete-word)
+(require-package 'graphviz-dot-mode)
+(require 'graphviz-dot-mode)
+(add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
+(use-package graphviz-dot-mode
+  :config
+  (setq graphviz-dot-indent-width 4)
+  )
+(use-package company-graphviz-dot)
+(add-hook 'graphviz-dot-mode-hook #'company-mode)
+
+
+
+
+
 
 
 

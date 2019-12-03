@@ -3,7 +3,7 @@
 ;;; This file bootstraps the configuration, which is divided into
 ;;; a number of other files.
 
-(let ((minver "24.3"))
+
 ;;----------------------------------------------------------------------------
 ;; Open Debug Mode
 ;;----------------------------------------------------------------------------
@@ -38,7 +38,7 @@
 ;;         ("org-cn" . "http://elpa.codefalling.com/org/")
 ;;         ("melpa-cn" . "http://elpa.codefalling.com/melpa/")))
 
-
+(let ((minver "24.3"))
   (when (version< emacs-version minver)
     (error "Your Emacs is too old -- this config requires v%s or higher" minver)))
 (when (version< emacs-version "24.5")
@@ -121,13 +121,13 @@
 ;(require 'init-crontab)
 (require 'init-textile)
 (require 'init-markdown)
-; (require 'init-csv)
+;; (require 'init-csv)
 (require 'init-erlang)
 (require 'init-javascript)
 (require 'init-php)
 (require 'init-org)
-; (require 'init-nxml)
-; (require 'init-html)
+;; (require 'init-nxml)
+;; (require 'init-html)
 (require 'init-css)
 (require 'init-haml)
 (require 'init-http)
