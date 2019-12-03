@@ -130,7 +130,7 @@ unwanted space when exporting org-mode to html."
 (setq org-reveal-root "file:////opt/reveal.js"
       org-reveal-mathjax t              ; t or nil
       org-reveal-hlevel 1 ; The minimum level of headings that should be grouped into vertical slides.
-      org-reveal-single-file nil        ; t or nil
+      org-reveal-single-file nil        ; t 导出单一的巨大HTML; nil ?print-pdf
       org-reveal-width (* (frame-pixel-width) 1.2)    ; auto detect the width of monitor
       org-reveal-height (* (frame-pixel-height) 1.2)    ;auto detect the height of monitor
       org-reveal-margin "-1"
@@ -505,6 +505,24 @@ Return a list containing the level change and the previous indentation."
 
 
 
+(require 'sql-indent)
+
+;; Update indentation rules, select, insert, delete and update keywords
+;; are aligned with the clause start
+
+(defvar my-sql-indentation-offsets-alist
+  `((select-clause 0)
+    (insert-clause 0)
+    (delete-clause 0)
+    (update-clause 0)
+    ,@sqlind-default-indentation-offsets-alist))
+
+(add-hook 'sqlind-minor-mode-hook
+          (lambda ()
+            (setq sqlind-indentation-offsets-alist
+                  my-sql-indentation-offsets-alist)))
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Misc
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -605,6 +623,8 @@ Return a list containing the level change and the previous indentation."
            (goto-char  (point-min))))))))
 (put 'upcase-region 'disabled nil)
 (global-set-key  (kbd  "C-c  d")  'kid-sdcv-to-buffer)
+
+
 
 ;;; 按%键跳到括弧另一半
 (defun my-match-paren (arg)
@@ -1018,5 +1038,17 @@ Return a list containing the level change and the previous indentation."
 (eval-after-load 'google-translate-tk
   '(setq google-translate--tkk-url "https://translate.google.cn/"))
 (global-set-key "\C-ct" 'google-translate-smooth-translate)
+
+;;; 自顶向下编程: 先框架，再细节
+(require-package 'elpygen)
+(require 'elpygen)
+(define-key python-mode-map (kbd "C-c i") 'elpygen-implement)
+
+;;; dot
+;; (require-package 'graphviz-dot-mode)
+;; (require 'graphviz-dot-mode)
+;; (define-key graphviz-dot-mode-map (kbd "M-/") 'graphviz-dot-complete-word)
+
+
 
 (provide 'init-local)
