@@ -46,7 +46,7 @@
 (require-package 'py-autopep8)
 (require 'py-autopep8)
 
-(setq py-autopep8-options '("--max-line-length=1920"))
+(setq py-autopep8-options '("--max-line-length=1920" "--ignore=E701"))
 (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
 (add-hook 'python-mode-hook (lambda ()
                               (require 'sphinx-doc)
@@ -936,5 +936,10 @@ Return a list containing the level change and the previous indentation."
   '(setq google-translate--tkk-url "https://translate.google.cn/"))
 (global-set-key "\C-ct" 'google-translate-smooth-translate)
 
+
+;;; leetcode
+
+(require 'subr-x)
+;; (require 'leetcode)
 
 (provide 'init-local)
