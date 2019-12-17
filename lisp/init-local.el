@@ -791,8 +791,8 @@ Return a list containing the level change and the previous indentation."
      (require 'outline-magic)
      (define-key outline-minor-mode-map (kbd "M-<left>") 'outline-cycle)))
 
-;; (require-package 'yafolding)
-;; (require 'yafolding)
+(require-package 'yafolding)
+(require 'yafolding)
 ;; (define-key yafolding-mode-map (kbd "<C-S-return>") nil)
 ;; (define-key yafolding-mode-map (kbd "<C-M-return>") nil)
 ;; (define-key yafolding-mode-map (kbd "<C-return>") nil)
