@@ -504,23 +504,24 @@ Return a list containing the level change and the previous indentation."
 
 
 
+;; (require-package 'sql-indent)
+;; (require 'sql-indent)
 
-(require 'sql-indent)
+;; ;; Update indentation rules, select, insert, delete and update keywords
+;; ;; are aligned with the clause start
 
-;; Update indentation rules, select, insert, delete and update keywords
-;; are aligned with the clause start
+;; (defvar my-sql-indentation-offsets-alist
+;;   `((select-clause 0)
+;;     (insert-clause 0)
+;;     (delete-clause 0)
+;;     (update-clause 0)
+;;     ,@sqlind-default-indentation-offsets-alist))
 
-(defvar my-sql-indentation-offsets-alist
-  `((select-clause 0)
-    (insert-clause 0)
-    (delete-clause 0)
-    (update-clause 0)
-    ,@sqlind-default-indentation-offsets-alist))
 
-(add-hook 'sqlind-minor-mode-hook
-          (lambda ()
-            (setq sqlind-indentation-offsets-alist
-                  my-sql-indentation-offsets-alist)))
+;; (add-hook 'sqlind-minor-mode-hook
+;;           (lambda ()
+;;             (setq sqlind-indentation-offsets-alist
+;;                   my-sql-indentation-offsets-alist)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -959,7 +960,9 @@ Return a list containing the level change and the previous indentation."
 ;;; 自顶向下编程: 先框架，再细节
 (require-package 'elpygen)
 (require 'elpygen)
-(define-key python-mode-map (kbd "C-c i") 'elpygen-implement)
+(define-key python-mode-map (kbd "C-c i f") 'elpygen-implement)
+
+
 
 ;;; dot
 (require-package 'graphviz-dot-mode)
