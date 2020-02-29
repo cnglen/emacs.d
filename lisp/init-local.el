@@ -286,7 +286,7 @@ resourcereport contact_list \"\" {
           )
       (setq org-html-head-include-default-style nil)
       (setq org-html-head
-            (format "<style type=\"text/css\">\n pre.src { background-color: %s; color: %s;} span.underline{text-decoration: underline} </style>\n" my-pre-bg my-pre-fg)))))
+            (format "<style type=\"text/css\">\n pre.src { background-color: %s; color: %s;} span.underline{text-decoration: underline}   div.figure p { text-align: center;}  </style>\n" my-pre-bg my-pre-fg)))))
 
 (add-hook 'org-export-before-processing-hook 'my-org-inline-css-hook)
 
@@ -388,18 +388,23 @@ you define your own `sql-mode-hive-font-lock-keywords'.")
   '(progn
      (load-library "sql-indent")
      (load-library "sqlup-mode")
+
      (sql-add-product
       'hive "Hive"
-      :free-software t
-      :font-lock 'sql-mode-hive-font-lock-keywords
-      :sqli-program 'sql-hive-program
-      :sqli-options 'sql-hive-options
-      :sqli-login 'sql-hive-login-params
-      :sqli-comint-func 'sql-comint-hive
-      :prompt-regexp "^hive> "
-      :prompt-length 5
-      :prompt-cont-regexp "^    > "
-      )))
+      '(
+        :free-software t
+        :font-lock 'sql-mode-hive-font-lock-keywords
+        :sqli-program 'sql-hive-program
+        :sqli-options 'sql-hive-options
+        :sqli-login 'sql-hive-login-params
+        :sqli-comint-func 'sql-comint-hive
+        :prompt-regexp "^hive> "
+        :prompt-length 5
+        :prompt-cont-regexp "^    > "
+        )
+      )
+
+     ))
 
 ;;; Default using Hive product in sql-mode
 (sql-set-product 'hive)
@@ -646,7 +651,7 @@ Return a list containing the level change and the previous indentation."
 
 
 ;;; Font part
-(set-default-font "Inconsolata 15") ;; English Font
+(set-frame-font "Inconsolata 15") ;; English Font
 (set-fontset-font "fontset-default" 'unicode "WenQuanYi Zen Hei Mono 15") ; Another Chinese Font
 ;;; non-free
 ;; (set-default-font "Consolas 14") ;; English Font
@@ -771,7 +776,7 @@ Return a list containing the level change and the previous indentation."
 ;;; ensime
 (setq ensime-startup-snapshot-notification nil)
 (require-package 'scala-mode)
-(require-package 'ensime)
+;; (require-package 'ensime)
 (require-package 'use-package)
 ;; (use-package ensime
 ;;   :ensure t
@@ -889,8 +894,8 @@ Return a list containing the level change and the previous indentation."
 (define-key python-mode-map (kbd "M-<right>") 'toggle-selective-display) ;; optional key bindings, easier than hs defaults
 
 
-;; (require-package 'yafolding)
-;; (require 'yafolding)
+(require-package 'yafolding)
+(require 'yafolding)
 ;; (define-key yafolding-mode-map (kbd "<C-S-return>") nil)
 ;; (define-key yafolding-mode-map (kbd "<C-M-return>") nil)
 ;; (define-key yafolding-mode-map (kbd "<C-return>") nil)
@@ -1058,6 +1063,46 @@ Return a list containing the level change and the previous indentation."
   )
 (use-package company-graphviz-dot)
 (add-hook 'graphviz-dot-mode-hook #'company-mode)
+
+;;; enable counsel mode
+(counsel-mode 1)
+
+(ivy-mode 1)
+(setq ivy-use-virtual-buffers t)
+(setq enable-recursive-minibuffers t)
+
+;; enable this if you want `swiper' to use it
+;; (setq search-default-mode #'char-fold-to-regexp)
+(global-set-key (kbd "C-s") 'swiper-isearch)
+(global-set-key (kbd "M-x") 'counsel-M-x)
+(global-set-key (kbd "C-x C-f") 'counsel-find-file)
+(global-set-key (kbd "M-y") 'counsel-yank-pop)
+(global-set-key (kbd "C-x b") 'ivy-switch-buffer)
+(global-set-key (kbd "C-c v") 'ivy-push-view)
+(global-set-key (kbd "C-c V") 'ivy-pop-view)
+
+(global-set-key (kbd "C-c c") 'counsel-compile)
+(global-set-key (kbd "C-c g") 'counsel-git)
+(global-set-key (kbd "C-c j") 'counsel-git-grep)
+(global-set-key (kbd "C-c L") 'counsel-git-log)
+(global-set-key (kbd "C-c k") 'counsel-rg)
+(global-set-key (kbd "C-c m") 'counsel-linux-app)
+(global-set-key (kbd "C-c n") 'counsel-fzf)
+(global-set-key (kbd "C-x l") 'counsel-locate)
+(global-set-key (kbd "C-c J") 'counsel-file-jump)
+(global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+(global-set-key (kbd "C-c w") 'counsel-wmctrl)
+
+(global-set-key (kbd "C-c C-r") 'ivy-resume)
+(global-set-key (kbd "C-c b") 'counsel-bookmark)
+(global-set-key (kbd "C-c d") 'counsel-descbinds)
+(global-set-key (kbd "C-c g") 'counsel-git)
+(global-set-key (kbd "C-c o") 'counsel-outline)
+(global-set-key (kbd "C-c t") 'counsel-load-theme)
+(global-set-key (kbd "C-c F") 'counsel-org-file)
+
+
+
 
 
 (provide 'init-local)

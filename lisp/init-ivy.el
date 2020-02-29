@@ -1,4 +1,7 @@
-;;; -*- lexical-binding: t -*-
+;;; init-ivy.el --- Use ivy for minibuffer completion and more -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
+
 (when (maybe-require-package 'ivy)
   (add-hook 'after-init-hook 'ivy-mode)
   (after-load 'ivy
@@ -6,9 +9,9 @@
                   ivy-virtual-abbreviate 'fullpath
                   ivy-count-format ""
                   projectile-completion-system 'ivy
-                  ivy-initial-inputs-alist
-                  '((man . "^")
-                    (woman . "^")))
+                  ivy-magic-tilde nil
+                  ivy-dynamic-exhibit-delay-ms 150
+                  ivy-use-selectable-prompt t)
 
     ;; IDO-style directory navigation
     (define-key ivy-minibuffer-map (kbd "RET") #'ivy-alt-done)
@@ -16,6 +19,9 @@
       (define-key ivy-minibuffer-map (kbd k) #'ivy-immediate-done))
 
     (define-key ivy-minibuffer-map (kbd "<up>") #'ivy-previous-line-or-history)
+    (define-key ivy-minibuffer-map (kbd "<down>") #'ivy-next-line-or-history)
+
+    (define-key ivy-occur-mode-map (kbd "C-c C-q") #'ivy-wgrep-change-to-wgrep-mode)
 
     (when (maybe-require-package 'diminish)
       (diminish 'ivy-mode)))
@@ -27,11 +33,12 @@
     (setq-default ivy-re-builders-alist
                   '((t . ivy--regex-fuzzy)))))
 
-(when (maybe-require-package 'ivy-historian)
-  (add-hook 'after-init-hook (lambda () (ivy-historian-mode t))))
-
 (when (maybe-require-package 'counsel)
   (setq-default counsel-mode-override-describe-bindings t)
+  (after-load 'counsel
+    (setq-default ivy-initial-inputs-alist
+                  '((Man-completion-table . "^")
+                    (woman . "^"))))
   (when (maybe-require-package 'diminish)
     (after-load 'counsel
       (diminish 'counsel-mode)))
@@ -46,11 +53,12 @@
             ((executable-find "ack") 'counsel-ack))))
       (when search-function
         (defun sanityinc/counsel-search-project (initial-input &optional use-current-dir)
-          "Search using `counsel-ag' from the project root for INITIAL-INPUT.
+          "Search using `counsel-rg' or similar from the project root for INITIAL-INPUT.
 If there is no project root, or if the prefix argument
 USE-CURRENT-DIR is set, then search from the current directory
 instead."
-          (interactive (list (thing-at-point 'symbol)
+          (interactive (list (let ((sym (thing-at-point 'symbol)))
+                               (when sym (regexp-quote sym)))
                              current-prefix-arg))
           (let ((current-prefix-arg)
                 (dir (if use-current-dir
@@ -59,18 +67,19 @@ instead."
                            (projectile-project-root)
                          (error default-directory)))))
             (funcall search-function initial-input dir)))))
+    (after-load 'ivy
+      (add-to-list 'ivy-height-alist (cons 'counsel-ag 20)))
     (global-set-key (kbd "M-?") 'sanityinc/counsel-search-project)))
 
 
 (when (maybe-require-package 'swiper)
   (after-load 'ivy
-    (defun sanityinc/swiper-at-point (sym)
-      "Use `swiper' to search for the symbol at point."
-      (interactive (list (thing-at-point 'symbol)))
-      (swiper sym))
+    (define-key ivy-mode-map (kbd "M-s /") 'swiper-thing-at-point)))
 
-    (define-key ivy-mode-map (kbd "M-s /") 'sanityinc/swiper-at-point)))
 
+(when (maybe-require-package 'ivy-xref)
+  (setq xref-show-xrefs-function 'ivy-xref-show-xrefs))
 
 
 (provide 'init-ivy)
+;;; init-ivy.el ends here
