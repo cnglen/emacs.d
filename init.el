@@ -19,12 +19,14 @@
 (when (and (>= libgnutls-version 30603)
            (<= emacs-major-version 26.2) )
   (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
-(setq package-archives '(("gnu"   . "http://mirrors.163.com/elpa/gnu/")
+(setq package-archives '(
+                         ("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                         ;; ("gnu"   . "http://mirrors.163.com/elpa/gnu/")
                          ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
                          ("org"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
                          ("melpa-stable"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/")
                          ))
-(package-initialize)
+;; (package-initialize)
 
 
 ;;; option 1
