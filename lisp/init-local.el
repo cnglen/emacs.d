@@ -886,6 +886,10 @@ Return a list containing the level change and the previous indentation."
 (require 'python)
 (define-key python-mode-map (kbd "M-<left>") 'toggle-hiding) ;; optional key bindings, easier than hs defaults
 (define-key python-mode-map (kbd "M-<right>") 'toggle-selective-display) ;; optional key bindings, easier than hs defaults
+;;; js fold
+(add-hook 'js-mode-hook 'hs-minor-mode)
+(define-key js-mode-map (kbd "M-<left>") 'toggle-hiding) ;; optional key bindings, easier than hs defaults
+(define-key js-mode-map (kbd "M-<right>") 'toggle-selective-display) ;; optional key bindings, easier than hs defaults
 
 
 ;; (require-package 'yafolding)
