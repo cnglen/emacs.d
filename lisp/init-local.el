@@ -1062,7 +1062,10 @@ Return a list containing the level change and the previous indentation."
 
 (setq debug-on-error 1)
 (defun smart-translate ()
-  "Using googletrans in pypi: pip install googletrans."
+  "Using googletrans in pypi: pip install googletrans.
+- pip install googletrans
+- client.py: change client:t -> client: webapp
+"
   (interactive)
   (let* ( (buffer-name "*Smart Translate*")
           (text  (if mark-active
