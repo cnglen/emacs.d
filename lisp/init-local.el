@@ -1061,19 +1061,21 @@ Return a list containing the level change and the previous indentation."
 ;; (message "google translate done")
 
 (setq debug-on-error 1)
-
-
 (defun smart-translate ()
-  "using googletrans in pypi: pip install googletrans"
+  "Using googletrans in pypi: pip install googletrans."
   (interactive)
-  (if mark-active
-      (setq text (strip-string (buffer-substring-no-properties (region-beginning) (region-end))))
-    (setq text (thing-at-point 'word 'no-properties)))
-  (setq ans (shell-command-to-string (format "translate -s en -d zh-CN '%s'" text))
-        buffer-name "*Smart Translate*")
-  (with-output-to-temp-buffer buffer-name
-    (set-buffer buffer-name)
-    (with-current-buffer buffer-name (insert ans)))
+  (let* ( (buffer-name "*Smart Translate*")
+          (text  (if mark-active
+                     (strip-string (buffer-substring-no-properties (region-beginning) (region-end)))
+                   (thing-at-point 'word 'no-properties)
+                   ))                    ;要翻译的文本
+          (cmd (format "translate -s en -d zh-CN \"\"\"%s\"\"\"" text)) ;执行的命令
+          )
+    (setq ans (shell-command-to-string cmd)) ;翻译，结果存入ans
+    (with-output-to-temp-buffer buffer-name
+      (set-buffer buffer-name)
+      (with-current-buffer buffer-name (insert ans)))
+    )
   )
 (global-set-key "\C-ct" 'smart-translate)
 
