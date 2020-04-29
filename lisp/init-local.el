@@ -1101,6 +1101,8 @@ Return a list containing the level change and the previous indentation."
 ;; (global-set-key (kbd "C-c t") 'counsel-load-theme)
 ;; (global-set-key (kbd "C-c F") 'counsel-org-file)
 
-
+;;; input method
+;; (global-unset-key (kbd "C-SPC"))
+;; (global-set-key (kbd "M-SPC") 'set-mark-command)
 
 (provide 'init-local)
