@@ -294,9 +294,11 @@ resourcereport contact_list \"\" {
 (message ">>   org started done")
 
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Hive
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(message ">> hive ...")
 (require 'sql)
 (require 'sql-indent)
 (require 'sqlup-mode)
@@ -507,7 +509,7 @@ Return a list containing the level change and the previous indentation."
     )
   )
 
-
+(message ">> hive done")
 
 ;; (require-package 'sql-indent)
 ;; (require 'sql-indent)
@@ -669,105 +671,105 @@ Return a list containing the level change and the previous indentation."
 ;;; Auto detect the coding of file, such as gb2312
 (require 'unicad)
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;; Java
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;; Usage
-;; ;;;
-;; ;;; 1) M-x start-eclimd or /opt/eclipse/jee-neon/eclipse/eclimd
-;; ;;; 2) M-x eclim-project-create or /opt/eclipse/jee-neon/eclipse/eclim -command project_create -f ~/workspace/thinking-in-java -n java -p eclim_project
-;; ;;;
-;; ;; (define-key eclim-mode-map (kbd "C-c C-e s")   'eclim-java-method-signature-at-point)
-;; ;; (define-key eclim-mode-map (kbd "C-c C-e f d") 'eclim-java-find-declaration)
-;; ;; (define-key eclim-mode-map (kbd "C-c C-e f r") 'eclim-java-find-references)
-;; ;; (define-key eclim-mode-map (kbd "C-c C-e f t") 'eclim-java-find-type)
-;; ;; (define-key eclim-mode-map (kbd "C-c C-e f f") 'eclim-java-find-generic)
-;; ;; (define-key eclim-mode-map (kbd "C-c C-e r")   'eclim-java-refactor-rename-symbol-at-point)
-;; ;; (define-key eclim-mode-map (kbd "C-c C-e i")   'eclim-java-import-organize)
-;; ;; (define-key eclim-mode-map (kbd "C-c C-e h")   'eclim-java-hierarchy)
-;; ;; (define-key eclim-mode-map (kbd "C-c C-e z")   'eclim-java-implement)
-;; ;; (define-key eclim-mode-map (kbd "C-c C-e d")   'eclim-java-doc-comment)
-;; ;; (define-key eclim-mode-map (kbd "C-c C-e f s") 'eclim-java-format)
-;; ;; (define-key eclim-mode-map (kbd "C-c C-e g")   'eclim-java-generate-getter-and-setter)
-;; ;; (define-key eclim-mode-map (kbd "C-c C-e t")   'eclim-run-junit)
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;; ;;; Java
+;; ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;; ;;; Usage
+;; ;; ;;;
+;; ;; ;;; 1) M-x start-eclimd or /opt/eclipse/jee-neon/eclipse/eclimd
+;; ;; ;;; 2) M-x eclim-project-create or /opt/eclipse/jee-neon/eclipse/eclim -command project_create -f ~/workspace/thinking-in-java -n java -p eclim_project
+;; ;; ;;;
+;; ;; ;; (define-key eclim-mode-map (kbd "C-c C-e s")   'eclim-java-method-signature-at-point)
+;; ;; ;; (define-key eclim-mode-map (kbd "C-c C-e f d") 'eclim-java-find-declaration)
+;; ;; ;; (define-key eclim-mode-map (kbd "C-c C-e f r") 'eclim-java-find-references)
+;; ;; ;; (define-key eclim-mode-map (kbd "C-c C-e f t") 'eclim-java-find-type)
+;; ;; ;; (define-key eclim-mode-map (kbd "C-c C-e f f") 'eclim-java-find-generic)
+;; ;; ;; (define-key eclim-mode-map (kbd "C-c C-e r")   'eclim-java-refactor-rename-symbol-at-point)
+;; ;; ;; (define-key eclim-mode-map (kbd "C-c C-e i")   'eclim-java-import-organize)
+;; ;; ;; (define-key eclim-mode-map (kbd "C-c C-e h")   'eclim-java-hierarchy)
+;; ;; ;; (define-key eclim-mode-map (kbd "C-c C-e z")   'eclim-java-implement)
+;; ;; ;; (define-key eclim-mode-map (kbd "C-c C-e d")   'eclim-java-doc-comment)
+;; ;; ;; (define-key eclim-mode-map (kbd "C-c C-e f s") 'eclim-java-format)
+;; ;; ;; (define-key eclim-mode-map (kbd "C-c C-e g")   'eclim-java-generate-getter-and-setter)
+;; ;; ;; (define-key eclim-mode-map (kbd "C-c C-e t")   'eclim-run-junit)
+;; ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(require-package 'eclim)
-(require-package 'auto-complete)
-(require-package 'ac-emacs-eclim)
-(require-package 'company-emacs-eclim)
-(require 'eclim)
-(require 'eclimd)
-
-
-(setq eclimd-autostart t)
-(defun my-java-mode-hook ()
-  (eclim-mode t))
-(add-hook 'java-mode-hook 'my-java-mode-hook)
-
-;;; Eclipse related
-;;; - Get eclipse from http://mirrors.ustc.edu.cn/eclipse/eclipse/downloads/
-;;; - Install into /opt/eclipse/version
-;;; - Install emacs-eclim, see https://github.com/emacs-eclim/emacs-eclim
-;;; - Eclpse -> Windows -> Preference -> Java -> buldpath -> Classpath variabele: new and add M2_REPO
-;;; - install eclim: see http://eclim.org/install.html#installer-automated
-;;; - mvn eclipse:eclipse -DdownloadSources -DdownloadJavadocs
-(custom-set-variables
- '(eclim-eclipse-dirs '("/opt/eclipse/oxygen/eclipse"))
- '(eclim-executable "/opt/eclipse/oxygen/eclim"))
-(setq eclimd-executable  "/opt/eclipse/oxygen/eclimd")
-(setq eclimd-default-workspace "~/.eclipse_workspace")
-(setq eclimd-wait-for-process nil)
-(setq eclim-accepted-file-regexps  '("\\.java$")) ; use eclim only for java
-
-(setq help-at-pt-display-when-idle t)
-(setq help-at-pt-timer-delay 0.1)
-(help-at-pt-set-timer)
-
-;;; too slow, depends on the PC configuration
-(require 'auto-complete-config)
-(ac-config-default)
-(require 'ac-emacs-eclim)
-(ac-emacs-eclim-config)
-
-(require 'company)
-(require 'company-emacs-eclim)
-(company-emacs-eclim-setup)
-(global-company-mode t)
-(setq company-global-modes '(not graphviz-dot-mode))
-
-(require-package 'use-package)
-(use-package eclim-mode
-  :bind (("M-?" . eclim-java-show-documentation-for-current-element))
-  )
-;;; FIXME
-;;; M-. -> eclim-java-find-type
+;; (require-package 'eclim)
+;; (require-package 'auto-complete)
+;; (require-package 'ac-emacs-eclim)
+;; (require-package 'company-emacs-eclim)
+;; (require 'eclim)
+;; (require 'eclimd)
 
 
+;; (setq eclimd-autostart t)
+;; (defun my-java-mode-hook ()
+;;   (eclim-mode t))
+;; (add-hook 'java-mode-hook 'my-java-mode-hook)
+
+;; ;;; Eclipse related
+;; ;;; - Get eclipse from http://mirrors.ustc.edu.cn/eclipse/eclipse/downloads/
+;; ;;; - Install into /opt/eclipse/version
+;; ;;; - Install emacs-eclim, see https://github.com/emacs-eclim/emacs-eclim
+;; ;;; - Eclpse -> Windows -> Preference -> Java -> buldpath -> Classpath variabele: new and add M2_REPO
+;; ;;; - install eclim: see http://eclim.org/install.html#installer-automated
+;; ;;; - mvn eclipse:eclipse -DdownloadSources -DdownloadJavadocs
+;; (custom-set-variables
+;;  '(eclim-eclipse-dirs '("/opt/eclipse/oxygen/eclipse"))
+;;  '(eclim-executable "/opt/eclipse/oxygen/eclim"))
+;; (setq eclimd-executable  "/opt/eclipse/oxygen/eclimd")
+;; (setq eclimd-default-workspace "~/.eclipse_workspace")
+;; (setq eclimd-wait-for-process nil)
+;; (setq eclim-accepted-file-regexps  '("\\.java$")) ; use eclim only for java
+
+;; (setq help-at-pt-display-when-idle t)
+;; (setq help-at-pt-timer-delay 0.1)
+;; (help-at-pt-set-timer)
+
+;; ;;; too slow, depends on the PC configuration
+;; (require 'auto-complete-config)
+;; (ac-config-default)
+;; (require 'ac-emacs-eclim)
+;; (ac-emacs-eclim-config)
+
+;; (require 'company)
+;; (require 'company-emacs-eclim)
+;; (company-emacs-eclim-setup)
+;; (global-company-mode t)
+;; (setq company-global-modes '(not graphviz-dot-mode))
+
+;; (require-package 'use-package)
+;; (use-package eclim-mode
+;;   :bind (("M-?" . eclim-java-show-documentation-for-current-element))
+;;   )
+;; ;;; FIXME
+;; ;;; M-. -> eclim-java-find-type
 
 
-;;; How to install google-java-format
-;;; - git clone https://github.com/google/google-java-format.git;
-;;; - mvn package; copy google-java-format-*-SNAPSHOT-all-deps.jar ~/.emacs.d/lib/google-java-format
-(require 'google-java-format)
-(setq google-java-format-executable "~/.emacs.d/bin/google-java-format")
-;;(define-key java-mode-map (kbd "C-M-\\") 'google-java-format-region)
-(defun google-java-format-enable-on-save ()
-  "Pre-save hook to be used before running autopep8."
-  (interactive)
-  (add-hook 'before-save-hook 'google-java-format-buffer nil t))
-(add-hook 'java-mode-hook 'google-java-format-enable-on-save)
-
-;;; FIXME: java indent 2 to compatile with google-java-format
-(add-hook 'java-mode-hook (lambda () (setq c-basic-offset 2)))
 
 
-;; ;;; todo
-;; (require-package 'hydra)
-;; (defhydra hydra-zoom (eclim-mode-map "C-c C-e")
-;;   "zoom"
-;;   ("?" eclim-java-show-documentation-for-current-element "doc")
-;;   ("r" eclim-java-find-references "references"))
+;; ;;; How to install google-java-format
+;; ;;; - git clone https://github.com/google/google-java-format.git;
+;; ;;; - mvn package; copy google-java-format-*-SNAPSHOT-all-deps.jar ~/.emacs.d/lib/google-java-format
+;; (require 'google-java-format)
+;; (setq google-java-format-executable "~/.emacs.d/bin/google-java-format")
+;; ;; ;;(define-key java-mode-map (kbd "C-M-\\") 'google-java-format-region)
+;; ;; (defun google-java-format-enable-on-save ()
+;; ;;   "Pre-save hook to be used before running autopep8."
+;; ;;   (interactive)
+;; ;;   (add-hook 'before-save-hook 'google-java-format-buffer nil t))
+;; ;; (add-hook 'java-mode-hook 'google-java-format-enable-on-save)
+
+;; ;; ;;; FIXME: java indent 2 to compatile with google-java-format
+;; ;; (add-hook 'java-mode-hook (lambda () (setq c-basic-offset 2)))
+
+
+;; ;; ;;; todo
+;; ;; (require-package 'hydra)
+;; ;; (defhydra hydra-zoom (eclim-mode-map "C-c C-e")
+;; ;;   "zoom"
+;; ;;   ("?" eclim-java-show-documentation-for-current-element "doc")
+;; ;;   ("r" eclim-java-find-references "references"))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -892,6 +894,11 @@ Return a list containing the level change and the previous indentation."
 (require 'python)
 (define-key python-mode-map (kbd "M-<left>") 'toggle-hiding) ;; optional key bindings, easier than hs defaults
 (define-key python-mode-map (kbd "M-<right>") 'toggle-selective-display) ;; optional key bindings, easier than hs defaults
+
+;;; js fold
+(add-hook 'js-mode-hook 'hs-minor-mode)
+;; (define-key js-mode-map (kbd "M-<left>") 'toggle-hiding) ;; optional key bindings, easier than hs defaults
+;; (define-key js-mode-map (kbd "M-<right>") 'toggle-selective-display) ;; optional key bindings, easier than hs defaults
 
 
 (require-package 'yafolding)
@@ -1023,22 +1030,59 @@ Return a list containing the level change and the previous indentation."
 (require-package 'pdf-tools)
 
 ;;; google 翻译
-(require-package 'google-translate)
-(require 'google-translate)
-(require 'google-translate-smooth-ui)
-(eval-after-load 'google-translate-core
-  '(setq google-translate-base-url "https://translate.google.cn/translate_a/single"
-         google-translate-listen-url "https://translate.google.cn/translate_tts"
-         google-translate-default-target-language "zh-CN"
-         google-translate-default-source-language ""
-         ))
-(setq google-translate-translation-directions-alist
-      '(("en" . "zh-CN")  ("zh-CN" . "en") ))
-(setq google-translate-backend-method 'curl)
-(eval-after-load 'google-translate-tk
-  '(setq google-translate--tkk-url "https://translate.google.cn/"))
-(global-set-key "\C-ct" 'google-translate-smooth-translate)
+;; (message "google translate ...")
+;; (require-package 'google-translate)
+;; (require 'google-translate)
+;; (require 'google-translate-smooth-ui)
 
+;; (eval-after-load 'google-translate-core
+;;   '(setq google-translate-base-url "https://translate.google.cn"
+;;          google-translate-listen-url "https://translate.google.cn/translate_tts"
+;;          google-translate-default-target-language "zh-CN"
+;;          google-translate-default-source-language ""
+;;          ))
+
+
+;; (eval-after-load 'google-translate-core
+;;   '(setq
+;;     google-translate-default-target-language "zh-CN"
+;;     google-translate-default-source-language ""
+;;     ))
+
+
+;; (setq google-translate-translation-directions-alist
+;;       '(("en" . "zh-CN")  ("zh-CN" . "en") ))
+;; (setq google-translate-backend-method 'curl)
+;; (eval-after-load 'google-translate-tk
+;;   '(setq google-translate--tkk-url "https://translate.google.cn/"))
+;; (global-set-key "\C-ct" 'google-translate-smooth-translate)
+
+
+;; (message "google translate done")
+
+(setq debug-on-error 1)
+(defun smart-translate ()
+  "Using googletrans in pypi: pip install googletrans.
+  if translate 拼多多 -> A lot of fight,  client.py: change client:t -> client: webapp.
+"
+  (if (string= (shell-command-to-string "which translate") "")
+      (shell-command-to-string "pip install git+https://github.com/ssut/py-googletrans.git")
+    )
+  (interactive)
+  (let* ( (buffer-name "*Smart Translate*")
+          (text  (if mark-active
+                     (strip-string (buffer-substring-no-properties (region-beginning) (region-end)))
+                   (thing-at-point 'word 'no-properties)
+                   ))                    ;要翻译的文本
+          (cmd (format "translate -s en -d zh-CN \"\"\"%s\"\"\"" text)) ;执行的命令
+          )
+    (setq ans (shell-command-to-string cmd)) ;翻译，结果存入ans
+    (with-output-to-temp-buffer buffer-name
+      (set-buffer buffer-name)
+      (with-current-buffer buffer-name (insert ans)))
+    )
+  )
+(global-set-key "\C-ct" 'smart-translate)
 
 
 ;;; leetcode
@@ -1074,12 +1118,15 @@ Return a list containing the level change and the previous indentation."
 ;; enable this if you want `swiper' to use it
 ;; (setq search-default-mode #'char-fold-to-regexp)
 ;; (global-set-key (kbd "C-s") 'swiper-isearch)
-(global-set-key (kbd "M-x") 'counsel-M-x)
-(global-set-key (kbd "C-x C-f") 'counsel-find-file)
-(global-set-key (kbd "M-y") 'counsel-yank-pop)
-(global-set-key (kbd "C-x b") 'ivy-switch-buffer)
-(global-set-key (kbd "C-c v") 'ivy-push-view)
-(global-set-key (kbd "C-c V") 'ivy-pop-view)
+
+
+;; (global-set-key (kbd "M-x") 'counsel-M-x)
+;; (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+;; (global-set-key (kbd "M-y") 'counsel-yank-pop)
+;; (global-set-key (kbd "C-x b") 'ivy-switch-buffer)
+;; (global-set-key (kbd "C-c v") 'ivy-push-view)
+;; (global-set-key (kbd "C-c V") 'ivy-pop-view)
+
 
 ;; (global-set-key (kbd "C-c c") 'counsel-compile)
 ;; (global-set-key (kbd "C-c g") 'counsel-git)
@@ -1098,11 +1145,20 @@ Return a list containing the level change and the previous indentation."
 ;; (global-set-key (kbd "C-c d") 'counsel-descbinds)
 ;; (global-set-key (kbd "C-c g") 'counsel-git)
 ;; (global-set-key (kbd "C-c o") 'counsel-outline)
+
 ;; (global-set-key (kbd "C-c t") 'counsel-load-theme)
 ;; (global-set-key (kbd "C-c F") 'counsel-org-file)
 
 ;;; input method
 ;; (global-unset-key (kbd "C-SPC"))
 ;; (global-set-key (kbd "M-SPC") 'set-mark-command)
+
+;; ;; (global-set-key (kbd "C-c t") 'counsel-load-theme)
+;; (global-set-key (kbd "C-c F") 'counsel-org-file)
+
+
+
+
+
 
 (provide 'init-local)

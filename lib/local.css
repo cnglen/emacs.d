@@ -91,6 +91,9 @@ code {
 
 }
 
+.reveal .notes {
+    color: red;
+}
 
 /* /\* for table *\/ */
 /* .reveal th { */
